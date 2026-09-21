@@ -1,40 +1,46 @@
 # AGENTS.md
 
-This document provides architectural, operational, and evidentiary guidance for AI coding and research agents working in the **`awesome-google-ads-mcp`** repository.
+Working rules and language guidelines for anyone — human or agent — editing this repository. It is a curated, plain-English index and technical comparison of Model Context Protocol (MCP) servers and agentic tooling for **[Google Ads](https://ads.google.com/)**. Keep it lean, minimalist, and immediately useful.
 
 ---
 
-## 1. Repository Architecture & Scope
+## 1. Project Philosophy & Minimalist Structure
 
-This repository is a **curated, developer-focused index and technical benchmark** of Model Context Protocol (MCP) servers and agentic tooling for the **Google Ads API**.
-
-### Core Invariants:
-1. **Strict Google Ads Scope:** Exclusively the Google Ads API surface (Search, Display, Shopping, Performance Max, Video, App, Demand Gen, Local). Legacy AdWords API tools belong in `docs/EXCLUSIONS.md`, never as active entries.
-2. **Structural Parity with `awesome-herdr`:** Preserves exact AST hierarchy:
-   `# Awesome Google Ads MCP [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)`
-   $\to$ Positioning Quote
-   $\to$ Official Links
-   $\to$ `## Contents` (numbered categories with `(N)`, nested subcategories with `(M)`)
-   $\to$ `## Developer Comparison Matrix` (20 Columns $\times$ 200 Rows max)
-   $\to$ Numbered `##` Categories $\to$ Italicized summaries
-   $\to$ `###` Subcategories $\to$ Italicized summaries
-   $\to$ Two-column tables `| Project | What it does |`
-   $\to$ `## Resources` $\to$ `## Reference`
-3. **Data Plane as Single Source of Truth:** `data/registry.json` is the authoritative ledger governed by `data/schema.json`. `README.md` is compiled via `python3 scripts/generate_readme.py`.
-4. **Mathematical Count Integrity:**
-   $$\text{Contents top count} \equiv \sum \text{Subcategory counts} \equiv \text{Table rows} \equiv \text{Registry count}$$
-5. **Two-Stage Jump-Linking:** Comparison Table project links point internally to `<a id="project-slug"></a>` in detailed tables, which provide the verified outbound GitHub link.
+- **No Onboarding Essays:** Keep the catalog root focused: Title, official links, Contents with counts, direct jump links into tables, and the Developer Comparison Matrix.
+- **Fast Jump Navigation:** Readers should jump directly to the relevant problem domain from the Table of Contents or Comparison Matrix in 1 click.
+- **Strict Scope Boundary:** Exclusively Google Ads API surface (Search, Display, Shopping, Performance Max, Video, App, Demand Gen, Local). Legacy AdWords API belongs exclusively in `docs/EXCLUSIONS.md`.
 
 ---
 
-## 2. Maintenance & Validation Commands
+## 2. Project Language & Voice Values
 
-Always run the mechanical validation suite before proposing or committing changes:
+- **Plain-English, Verb-First Prose:** Lead with active verbs (*Executes*, *Synchronizes*, *Streams*, *Caches*, *Mutates*, *Protects*, *Inspects*).
+- **The 1–2 Sentence Rule:** Every project entry must be strictly 1 or 2 concise sentences (never exceeding 3 sentences).
+  - *Sentence 1:* What the tool specifically does for a developer or agent.
+  - *Sentence 2:* How it differs from its closest alternatives (e.g. gRPC streaming, SQLite caching, MCP Apps sandboxed UI, or MCC switching).
+- **Subcategory Header & Table Standards:** Each subcategory begins with a count and a 1-sentence summary, followed by a clean 2-column markdown table.
 
-```bash
-# 1. Regenerate README from registry.json
-python3 scripts/generate_readme.py
+---
 
-# 2. Run mechanical validation suite
-python3 scripts/validate_awesome.py --strict
-```
+## 3. Two-Stage Jump-Linking Model
+
+- The Developer Comparison Matrix links internally via anchor tags (`[owner/repo](#project-slug)`).
+- Project tables embed `<a id="project-slug"></a>` anchors and supply the verified external GitHub URL.
+
+---
+
+## 4. Strict Exclusion Criteria (What NEVER Belongs in Active Tables)
+
+To maintain a high-signal catalog, the following must **never** be added to active tables:
+
+1. **NO Sunset AdWords API Tools:** Only tools built against the modern Google Ads API qualify.
+2. **NO Empty Scaffolds or Incomplete Stubs:** Repositories without working tool handlers or broken builds.
+3. **NO Generic Non-Ads Wrappers:** Generic multi-platform directories qualify only if they provide a distinct, first-class Google Ads API toolset.
+4. **NO Marketing Hype or AI Filler:** Descriptions must remain factual, concise, and neutral.
+
+---
+
+## 5. Before Committing
+
+1. Run `npx markdownlint-cli2 "**/*.md"` — it must exit clean with **0 issues** (same check CI runs).
+2. Ensure mathematical count integrity across all categories and subcategories.

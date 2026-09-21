@@ -1,6 +1,6 @@
 # Contributing to Awesome Google Ads MCP
 
-Thank you for contributing to **Awesome Google Ads MCP**! This repository is a strictly curated, developer-focused index and technical benchmark of Model Context Protocol (MCP) servers and agent-facing tooling for the **Google Ads API**.
+Thank you for contributing to **Awesome Google Ads MCP**! This repository is a strictly curated, developer-focused index and technical comparison of Model Context Protocol (MCP) servers and agent-facing tooling for the **Google Ads API**.
 
 To maintain institutional engineering quality and prevent directory bloat, all submissions must satisfy our **15 Inclusion Criteria**.
 
@@ -31,14 +31,18 @@ Before submitting a Pull Request, verify that your project satisfies every appli
 ## Submission Workflow
 
 1. Fork the repository.
-2. Add your tool entry to `data/registry.json` conforming to `data/schema.json`.
-3. Add the project to the appropriate subcategory table in `README.md` following the exact format:
+2. Add your project to the appropriate subcategory table in `README.md` following the exact format:
+
    ```markdown
    | <a id="owner-repo"></a>[**owner/repo**](https://github.com/owner/repo) | Concise factual description of what it actually does. |
    ```
-4. Update the Developer Comparison Table with verified technical capabilities.
-5. Run the validation suite to ensure mathematical and link integrity:
+
+3. Update the Developer Comparison Matrix with verified technical capabilities.
+4. Ensure all category counts and subcategory counts in `## Contents` and section headers remain mathematically consistent.
+5. Run the markdown linter:
+
    ```bash
-   python3 scripts/validate_awesome.py --readme README.md --registry data/registry.json --schema data/schema.json --strict
+   npx markdownlint-cli2 "**/*.md"
    ```
+
 6. Submit your Pull Request. All CI checks must pass.

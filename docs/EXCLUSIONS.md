@@ -1,8 +1,7 @@
 # Quarantined & Excluded Entities Ledger: Google Ads MCP Ecosystem Benchmark
 
-**Benchmark Version:** 1.0.0  
-**Corpus Root:** `/root/dev/research/google-ads-mcp/`  
-**Governing Protocol:** Antigravity Deep Research & Benchmark Methodology  
+**Audit Version:** 1.0.0  
+**Evaluation Scope:** Google Ads MCP Ecosystem Candidate Discovery  
 **Total Discovered Candidate Pool:** 435  
 **Evaluated Core Cohort:** 55  
 **Total Quarantined Exclusions:** 381  
@@ -14,6 +13,7 @@
 To preserve the statistical rigor, evidentiary integrity, and actionable utility of the benchmark, candidate repositories identified during wide discovery were systematically quarantined if they failed foundational quality gates.
 
 Exclusion Criteria:
+
 1. **EMPTY_OR_UNMODIFIED_FORK:** Zero-commit downstream forks of upstream repositories without independent modifications or novel tooling.
 2. **DORMANT_INACTIVE:** Repositories with no commit activity for >6 months, abandoned prototypes, or unmaintained stubs lacking MCP protocol compliance.
 3. **NON_MCP_STANDALONE_SCRIPT:** AdTech scripts, Google Ads API tutorials, or Python ETL tools that lack a Model Context Protocol server interface (`stdio`, `SSE`, Streamable HTTP).
@@ -48,7 +48,7 @@ Exclusion Criteria:
 | 10 | [`TrueClicks/google-ads-mcp-dotnet`](https://github.com/TrueClicks/google-ads-mcp-dotnet) | 9 | 1 | C# | 2026-01-07 | Unofficial Google Ads MCP |
 | 11 | [`gokhunyayla/google-ads-mcp-server`](https://github.com/gokhunyayla/google-ads-mcp-server) | 2 | 2 | TypeScript | 2025-07-31 | This is an MCP server for Google Ads API. |
 | 12 | [`CAPTAINCODERCOOL/AI-powered-SEO-automation-platform-integrating-Google-Ads-Keyword-Planner`](https://github.com/CAPTAINCODERCOOL/AI-powered-SEO-automation-platform-integrating-Google-Ads-Keyword-Planner) | 8 | 2 | None | 2025-05-13 | AI-powered SEO automation platform integrating Google Ads Ke |
-| 13 | [`kiri2sama/google_ads_mcp_server`](https://github.com/kiri2sama/google_ads_mcp_server) | 0 | 2 | None | 2025-10-10 | This repo has been archived in favor of: https://github.com/ |
+| 13 | [`kiri2sama/google_ads_mcp_server`](https://github.com/kiri2sama/google_ads_mcp_server) | 0 | 2 | None | 2025-10-10 | This repo has been archived in favor of upstream repository |
 | 14 | [`GoAnyAPI/goanyapi-mcp`](https://github.com/GoAnyAPI/goanyapi-mcp) | 3 | 2 | TypeScript | 2026-08-31 | Official GoAnyAPI MCP server — connect AI agents to web data |
 | 15 | [`nowork-studio/google-ads-mcp`](https://github.com/nowork-studio/google-ads-mcp) | 3 | 1 | None | 2026-08-24 | Hosted Google Ads MCP setup guide for AI agents, powered by  |
 | 16 | [`bertramdev/GoogleAdsMCP`](https://github.com/bertramdev/GoogleAdsMCP) | 2 | 1 | Python | 2026-03-23 | Google Ads MCP server — 47 tools for full read/write access  |
