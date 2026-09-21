@@ -1,0 +1,47 @@
+{
+  "source_repository": "ogulcancelik/herdr",
+  "source_file": "README.md",
+  "extracted_at": "2026-09-21T19:10:00Z",
+  "ast_spec": {
+    "title_pattern": "^# Awesome (?P<topic>[^\\n]+) \\[\\!\\[Awesome\\]\\(https://awesome\\.re/badge\\.svg\\)\\]\\(https://awesome\\.re\\)$",
+    "blockquote_pattern": "^> (?P<positioning>[^\\n]+)$",
+    "official_links_pattern": "^Official links: (?P<links>[^\\n]+)$",
+    "divider_pattern": "^---$",
+    "contents_heading": "^## Contents$",
+    "contents_category_link_pattern": "^(?P<num>\\d+)\\. \\[(?P<title>[^\\(]+) \\((?P<count>\\d+)\\)\\]\\(#(?P<anchor>[^\\)]+)\\)$",
+    "contents_subcategory_link_pattern": "^   - \\[(?P<title>[^\\(]+) \\((?P<count>\\d+)\\)\\]\\(#(?P<anchor>[^\\)]+)\\)$",
+    "category_heading_pattern": "^## (?P<num>\\d+)\\. (?P<title>[^\\n]+)$",
+    "category_summary_pattern": "^\\*(?P<count>\\d+) projects?\\. (?P<desc>[^\\*]+)\\*$",
+    "subcategory_heading_pattern": "^### (?P<title>[^\\n]+)$",
+    "subcategory_summary_pattern": "^\\*(?P<count>\\d+) projects?\\. (?P<desc>[^\\*]+)\\*$",
+    "table_header_pattern": "^\\| Project \\| What it does \\|$",
+    "table_divider_pattern": "^\\|---\\|---\\|$",
+    "table_row_pattern": "^\\| (?P<anchor><a id=\"[^\"]+\"></a>)?\\[\\*\\*(?P<name>[^\\*]+)\\*\\*\\]\\((?P<url>[^\\)]+)\\) \\| (?P<desc>[^\\|]+) \\|$",
+    "closing_sections": [
+      {
+        "title": "Developer comparison matrix",
+        "level": "H2",
+        "is_numbered": false,
+        "anchor": "#developer-comparison-matrix"
+      },
+      {
+        "title": "Resources",
+        "level": "H2",
+        "is_numbered": false,
+        "anchor": "#resources"
+      },
+      {
+        "title": "Reference",
+        "level": "H2",
+        "is_numbered": false,
+        "anchor": "#reference"
+      }
+    ]
+  },
+  "invariants": {
+    "count_contract": "sum(subcategory_counts) == category_count; sum(category_counts) == total_unique_projects == total_table_rows",
+    "heading_hierarchy": "H1 -> H2 (Contents) -> H2 (Categories) -> H3 (Subcategories). No H4 or deeper.",
+    "description_density": "Maximum 3 sentences per project entry, active voice verb start, factual and decision-relevant.",
+    "two_stage_linking": "Comparison table row project links to #project-slug anchor in detailed table; detailed table links to external GitHub URL."
+  }
+}
