@@ -2,9 +2,9 @@
 
 **Audit Version:** 1.0.0  
 **Evaluation Scope:** Google Ads MCP Ecosystem Candidate Discovery  
-**Total Discovered Candidate Pool:** 435  
-**Evaluated Core Cohort:** 55  
-**Total Quarantined Exclusions:** 381  
+**Total Discovered Candidate Pool:** 436  
+**Evaluated Core Cohort:** 45  
+**Total Quarantined Exclusions:** 391  
 
 ---
 
@@ -23,16 +23,16 @@ Exclusion Criteria:
 
 ## 2. Quarantined Entities Breakdown
 
-- **DORMANT_INACTIVE:** 308 repositories
-- **EMPTY_OR_UNMODIFIED_FORK:** 0 repositories
+- **DORMANT_INACTIVE:** 314 repositories
+- **EMPTY_OR_UNMODIFIED_FORK:** 1 repository
 - **NON_MCP_STANDALONE_SCRIPT:** 30 repositories
-- **SHALLOW_MARKETING_STUB:** 43 repositories
+- **SHALLOW_MARKETING_STUB:** 46 repositories
 
 ---
 
 ## 3. Quarantined Repositories Directory
 
-### Category: `DORMANT_INACTIVE` (308 repositories)
+### Category: `DORMANT_INACTIVE` (314 repositories)
 
 | # | Repository | Stars | Forks | Language | Last Push | Exclusion Reason |
 |---|---|---|---|---|---|---|
@@ -344,11 +344,18 @@ Exclusion Criteria:
 | 306 | [`advisorppc-org/advisorppc-plugin`](https://github.com/advisorppc-org/advisorppc-plugin) | 0 | 0 | None | 2026-08-28 | Official AdvisorPPC plugin for Claude Code — audit and manag |
 | 307 | [`redwoodmeridian/ranql-skills`](https://github.com/redwoodmeridian/ranql-skills) | 1 | 0 | None | 2026-07-24 | Claude Code plugin: turn Claude into your law firm's marketi |
 | 308 | [`benheis/ads-mcp-connector`](https://github.com/benheis/ads-mcp-connector) | 1 | 0 | Python | 2026-04-23 | Connect Claude Code to Meta Ads and Google Ads. One-command  |
+| 309 | [`kiarashedraki/google-ads-mcp`](https://github.com/kiarashedraki/google-ads-mcp) | 0 | 0 | TypeScript | 2025-10-12 | Single-commit scaffold with no tests, no documentation, and zero maintenance since creation |
+| 310 | [`Lazare-42/google-ads-mcp`](https://github.com/Lazare-42/google-ads-mcp) | 0 | 0 | Rust | 2025-11-04 | Incomplete 5-commit Rust scaffold with broken gRPC stubs |
+| 311 | [`zelentsov-dev/google-ads-mcp`](https://github.com/zelentsov-dev/google-ads-mcp) | 0 | 0 | Python | 2025-09-18 | Minimal 4-commit script without tests or active usage |
+| 312 | [`x777/mcp-google-ads`](https://github.com/x777/mcp-google-ads) | 1 | 0 | Python | 2025-10-22 | 2-commit prototype without error handling or active maintenance |
+| 313 | [`yeswanthreddyk/Google-ads-MCP`](https://github.com/yeswanthreddyk/Google-ads-MCP) | 0 | 0 | Python | 2025-10-15 | 2-commit prototype redundant with established FastMCP servers |
+| 314 | [`ThainaJardim/google-ads-mcp`](https://github.com/ThainaJardim/google-ads-mcp) | 0 | 0 | Python | 2025-10-09 | 2-commit prototype with only 3 basic tools |
 
-### Category: `EMPTY_OR_UNMODIFIED_FORK` (0 repositories)
+### Category: `EMPTY_OR_UNMODIFIED_FORK` (1 repository)
 
 | # | Repository | Stars | Forks | Language | Last Push | Exclusion Reason |
 |---|---|---|---|---|---|---|
+| 1 | [`iflow-mcp/itallstartedwithaidea-google-ads-mcp`](https://github.com/iflow-mcp/itallstartedwithaidea-google-ads-mcp) | 0 | 0 | Python | 2026-04-14 | Exact downstream fork duplicate of itallstartedwithaidea/google-ads-mcp with zero architectural divergence |
 
 ### Category: `NON_MCP_STANDALONE_SCRIPT` (30 repositories)
 
@@ -385,7 +392,7 @@ Exclusion Criteria:
 | 29 | [`langchain-ai/paid-media-agent`](https://github.com/langchain-ai/paid-media-agent) | 61 | 16 | Python | 2026-09-14 | Open-source paid media agent for Google Ads, Meta Ads, Reddi |
 | 30 | [`cassiorox/ClaudePRO`](https://github.com/cassiorox/ClaudePRO) | 7 | 2 | Python | 2026-09-21 | Framework Claude Code pra gestores de trafego (agencias e eu |
 
-### Category: `SHALLOW_MARKETING_STUB` (43 repositories)
+### Category: `SHALLOW_MARKETING_STUB` (46 repositories)
 
 | # | Repository | Stars | Forks | Language | Last Push | Exclusion Reason |
 |---|---|---|---|---|---|---|
@@ -432,3 +439,6 @@ Exclusion Criteria:
 | 41 | [`itallstartedwithaidea/ai-agents-crash-course`](https://github.com/itallstartedwithaidea/ai-agents-crash-course) | 13 | 0 | HTML | 2026-04-12 | Free 42-page AI agents crash course v5.0 — 5 days, 3 learnin |
 | 42 | [`Tymyopp/MazyOS-Rework`](https://github.com/Tymyopp/MazyOS-Rework) | 0 | 2 | JavaScript | 2026-08-14 | MazyOS-Rework — sistema operacional do negocio em agentes de |
 | 43 | [`Satori-L/ads-agent-brain`](https://github.com/Satori-L/ads-agent-brain) | 0 | 0 | None | 2026-06-12 | The judgment layer of a production Google Ads agent — operat |
+| 44 | [`irinabuht12-oss/marketing-skills`](https://github.com/irinabuht12-oss/marketing-skills) | 1638 | 210 | Markdown | 2026-03-25 | Pure Markdown prompt/skill repository without executable MCP server code; retained irinabuht12-oss/google-meta-ads-ga4-mcp |
+| 45 | [`saifshabsug/google-ads-mcp-pro`](https://github.com/saifshabsug/google-ads-mcp-pro) | 1 | 0 | Python | 2025-10-18 | Single-commit marketing README with trivial wrapper code |
+| 46 | [`VidenGrowth/public-google-ads-mcp`](https://github.com/VidenGrowth/public-google-ads-mcp) | 2 | 0 | Python | 2025-11-01 | 3-commit thin agency wrapper, lowest benchmark composite score (44.9%) |

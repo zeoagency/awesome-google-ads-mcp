@@ -8,104 +8,106 @@ Official links: [Google Ads API Documentation](https://developers.google.com/goo
 
 ## Contents
 
-1. [Query and report with GAQL (13)](#1-query-and-report-with-gaql)
+- [Developer Comparison Matrix (45)](#developer-comparison-matrix)
+
+1. [Query and report with GAQL (8)](#1-query-and-report-with-gaql)
    - [Official DevRel gateways and gRPC SearchStream pipelines (2)](#official-devrel-gateways-and-grpc-searchstream-pipelines)
-   - [Dynamic schema reflection and field discovery (3)](#dynamic-schema-reflection-and-field-discovery)
-   - [Zero-SDK lean REST and minimal GAQL execution (4)](#zero-sdk-lean-rest-and-minimal-gaql-execution)
-   - [Edge runtimes and compiled native proxies (4)](#edge-runtimes-and-compiled-native-proxies)
+   - [Dynamic schema reflection and field discovery (1)](#dynamic-schema-reflection-and-field-discovery)
+   - [Zero-SDK lean REST and minimal GAQL execution (3)](#zero-sdk-lean-rest-and-minimal-gaql-execution)
+   - [Edge runtimes and compiled native proxies (2)](#edge-runtimes-and-compiled-native-proxies)
 2. [Persist data locally and query with SQL (5)](#2-persist-data-locally-and-query-with-sql)
    - [Embedded SQLite data warehouses with background workers (2)](#embedded-sqlite-data-warehouses-with-background-workers)
    - [Local campaign snapshot and zero-quota analytical caches (3)](#local-campaign-snapshot-and-zero-quota-analytical-caches)
-3. [Automate campaign mutations, budgets, and bid strategies (10)](#3-automate-campaign-mutations-budgets-and-bid-strategies)
-   - [Direct REST campaign mutation and bid/budget setters (3)](#direct-rest-campaign-mutation-and-bidbudget-setters)
+3. [Automate campaign mutations, budgets, and bid strategies (9)](#3-automate-campaign-mutations-budgets-and-bid-strategies)
+   - [Direct REST campaign mutation and bid/budget setters (2)](#direct-rest-campaign-mutation-and-bidbudget-setters)
    - [Validated campaign CRUD with dry-run mutation guards (4)](#validated-campaign-crud-with-dry-run-mutation-guards)
    - [Keyword Planner and RLSA audience targeting suites (3)](#keyword-planner-and-rlsa-audience-targeting-suites)
 4. [Enforce mutation safety with visual MCP Apps and human approval (4)](#4-enforce-mutation-safety-with-visual-mcp-apps-and-human-approval)
    - [Interactive React widgets with window.postMessage commit bypass (2)](#interactive-react-widgets-with-windowpostmessage-commit-bypass)
    - [Spend protection sliders and physical budget modals (2)](#spend-protection-sliders-and-physical-budget-modals)
-5. [Manage agency access and multi-account MCC hierarchies (10)](#5-manage-agency-access-and-multi-account-mcc-hierarchies)
+5. [Manage agency access and multi-account MCC hierarchies (9)](#5-manage-agency-access-and-multi-account-mcc-hierarchies)
    - [Dynamic MCC switching via login-customer-id routing (3)](#dynamic-mcc-switching-via-login-customer-id-routing)
    - [Proactive 60-minute OAuth token refresh daemons (3)](#proactive-60-minute-oauth-token-refresh-daemons)
-   - [Multi-tenant credential vaults and agency proxies (4)](#multi-tenant-credential-vaults-and-agency-proxies)
+   - [Multi-tenant credential vaults and agency proxies (3)](#multi-tenant-credential-vaults-and-agency-proxies)
 6. [Analyze performance with domain playbooks and heuristics (4)](#6-analyze-performance-with-domain-playbooks-and-heuristics)
    - [Expert AdTech reasoning engines and conversion lag discounting (1)](#expert-adtech-reasoning-engines-and-conversion-lag-discounting)
    - [Impression share lost-to-budget and micros currency models (3)](#impression-share-lost-to-budget-and-micros-currency-models)
-7. [Integrate agentic workflows and multi-platform marketing stacks (9)](#7-integrate-agentic-workflows-and-multi-platform-marketing-stacks)
-   - [Autonomous Claude Code marketing skills and CLI copilots (3)](#autonomous-claude-code-marketing-skills-and-cli-copilots)
-   - [Unified Google Ads, Meta Ads, and GA4 analytics bridges (6)](#unified-google-ads-meta-ads-and-ga4-analytics-bridges)
-8. [Developer comparison matrix (55)](#developer-comparison-matrix)
-9. [Resources](#resources)
-10. [Reference](#reference)
+7. [Integrate agentic workflows and multi-platform marketing stacks (6)](#7-integrate-agentic-workflows-and-multi-platform-marketing-stacks)
+   - [Autonomous Claude Code marketing skills and CLI copilots (2)](#autonomous-claude-code-marketing-skills-and-cli-copilots)
+   - [Unified Google Ads, Meta Ads, and GA4 analytics bridges (4)](#unified-google-ads-meta-ads-and-ga4-analytics-bridges)
+
+- [Resources](#resources)
+- [Reference](#reference)
 
 ---
 
 ## Developer Comparison Matrix
 
-*55 projects. Side-by-side technical capability comparison across runtime, authentication, persistence, token formatting, and API coverage. Project names link internally to detailed listings below.*
+*45 projects. Side-by-side technical capability comparison across runtime, authentication, persistence, token formatting, and API coverage. Project names link internally to detailed listings below.*
 
-| Project | Role | Runtime | Transport | SearchStream | Dry-Run | Mutations | Search | PMax/Shop | Video/Disp | Offline Conv | GAQL Refl | SQLite Cache | Latency | MCP Apps | HITL Appr | MCC Multi | Refresh Daemon | Footprint | Stars / Cadence |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| [nowork-studio/notfair-plugin](#nowork-studio-notfair-plugin) | `MCP App Platform` | `TypeScript` | `Streamable HTTP` | No | Yes | Yes | Yes | Yes | Yes | Yes | Yes | WAL | Sub-5ms | React | Modal | Dynamic | Auto | Ultra-Low | 3840★ (Active) |
-| [irinabuht12-oss/google-meta-ads-ga4-mcp](#irinabuht12-oss-google-meta-ads-ga4-mcp) | `Multi-Platform Suite` | `Polyglot` | `stdio` | No | No | Read-Only | Yes | Yes | Yes | Yes | Yes | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 2033★ (Active) |
-| [googleads/google-ads-mcp](#googleads-google-ads-mcp) | `DevRel Gateway` | `Python` | `stdio` | Full | Yes | Read-Only | Yes | Yes | Yes | No | Yes | WAL | Sub-5ms | No | No | Dynamic | Auto | Low | 969★ (Active) |
-| [irinabuht12-oss/marketing-skills](#irinabuht12-oss-marketing-skills) | `Agent Skill Suite` | `Markdown` | `stdio` | No | No | Read-Only | Yes | Yes | Yes | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 1638★ (Active) |
-| [cohnen/mcp-google-ads](#cohnen-mcp-google-ads) | `Lean REST Gateway` | `Python` | `stdio` | No | No | Read-Only | Yes | Yes | Yes | No | Yes | No | 800ms–2500ms | No | No | Dynamic | Manual | Ultra-Low | 710★ (Active) |
-| [kLOsk/adloop](#klosk-adloop) | `Meta-MCP Engine` | `Python` | `stdio` | No | No | Read-Only | Yes | Yes | Yes | No | Yes | WAL | Sub-5ms | No | No | Dynamic | Auto | Ultra-Low | 266★ (Active) |
-| [TheMattBerman/google-ads-copilot](#themattberman-google-ads-copilot) | `Agentic Copilot` | `Shell` | `stdio` | No | No | Read-Only | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 235★ (Active) |
-| [thatrebeccarae/claude-marketing](#thatrebeccarae-claude-marketing) | `Claude Skill Pack` | `Python` | `stdio` | No | No | Read-Only | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 147★ (Active) |
-| [gomarble-ai/google-ads-mcp-server](#gomarble-ai-google-ads-mcp-server) | `Enterprise Daemon` | `Python` | `stdio` | No | Yes | Yes | Yes | Yes | Yes | No | Yes | WAL | Sub-5ms | No | No | Dynamic | Auto | Low | 144★ (Active) |
-| [mathiaschu/google-ads-analyzer](#mathiaschu-google-ads-analyzer) | `Cognitive Brain` | `Python` | `stdio` | No | No | Read-Only | Yes | Yes | Yes | No | Yes | No | 800ms–2500ms | No | No | Single | Manual | Low | 67★ (Active) |
-| [FGRibreau/mcp-google-ads](#fgribreau-mcp-google-ads) | `Native Rust Gateway` | `Rust` | `stdio` | Full | No | Read-Only | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Ultra-Low | 52★ (Active) |
-| [TrueClicks/google-ads-mcp-js](#trueclicks-google-ads-mcp-js) | `Audit & MCC Proxy` | `JavaScript` | `stdio` | No | No | Read-Only | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 50★ (Active) |
-| [grantweston/google-ads-mcp-complete](#grantweston-google-ads-mcp-complete) | `Campaign Mutator` | `Python` | `stdio` | No | No | Yes | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 25★ (Active) |
-| [promobase/google-ads-mcp](#promobase-google-ads-mcp) | `Budget Mutator` | `Python` | `stdio` | No | No | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 22★ (Active) |
-| [johnoconnor0/google-ads-mcp](#johnoconnor0-google-ads-mcp) | `Auth Daemon` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Auto | Low | 16★ (Active) |
-| [davidmosiah/google-ads-mcp-unofficial](#davidmosiah-google-ads-mcp-unofficial) | `Reporting Proxy` | `TypeScript` | `stdio` | No | No | Read-Only | Yes | No | No | No | Yes | No | 800ms–2500ms | No | No | Single | Manual | Low | 4★ (Active) |
-| [akelaonline/MCP-Google-Ads](#akelaonline-mcp-google-ads) | `Local SQLite Engine` | `Python` | `stdio` | No | No | Read-Only | Yes | Yes | No | No | No | WAL | Sub-5ms | No | No | Dynamic | Manual | Low | 4★ (Active) |
-| [itallstartedwithaidea/google-ads-mcp](#itallstartedwithaidea-google-ads-mcp) | `Marketing Bridge` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 3★ (Active) |
-| [VidenGrowth/public-google-ads-mcp](#videngrowth-public-google-ads-mcp) | `Agency Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 2★ (Active) |
-| [x777/mcp-google-ads](#x777-mcp-google-ads) | `FastMCP REST Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [minholi/google-ads-mcp](#minholi-google-ads-mcp) | `Reporting Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [mharnett/mcp-google-ads](#mharnett-mcp-google-ads) | `Local Cache Proxy` | `TypeScript` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | WAL | Sub-5ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [LucasSantana-Dev/google-ads-mcp](#lucassantana-dev-google-ads-mcp) | `Analytical Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | WAL | Sub-5ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [saifshabsug/google-ads-mcp-pro](#saifshabsug-google-ads-mcp-pro) | `Campaign Mutator` | `Python` | `stdio` | No | No | Yes | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [konradbachowski/google-ads-mcp](#konradbachowski-google-ads-mcp) | `Keyword Specialist` | `Python` | `stdio` | No | No | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | High | 1★ (Active) |
-| [growmedevelopment/google-ads-mcp](#growmedevelopment-google-ads-mcp) | `Keyword Specialist` | `Python` | `stdio` | No | No | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [ball2jh/google-ads-mcp](#ball2jh-google-ads-mcp) | `Keyword Specialist` | `Python` | `stdio` | No | No | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [ameydabhade/google-ads-mcp](#ameydabhade-google-ads-mcp) | `MCP App UI` | `TypeScript` | `stdio` | No | No | Yes | Yes | No | No | No | No | No | 800ms–2500ms | React | Modal | Single | Manual | Low | 1★ (Active) |
-| [monsieurgoodmood/google-ads-mcp-plus](#monsieurgoodmood-google-ads-mcp-plus) | `Spend Protector` | `Python` | `stdio` | No | Yes | Yes | Yes | No | No | No | No | No | 800ms–2500ms | React | Modal | Single | Manual | Low | 1★ (Active) |
-| [dhawalshah/google-ads-mcp](#dhawalshah-google-ads-mcp) | `Multi-Tenant Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 1★ (Active) |
-| [BrandonMiller18/google-ads-mcp](#brandonmiller18-google-ads-mcp) | `Analytics Helper` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 1★ (Active) |
-| [BinarCode/google-ads-mcp-http](#binarcode-google-ads-mcp-http) | `Cloud Gateway` | `TypeScript` | `Streamable HTTP` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 0★ (Active) |
-| [ThainaJardim/google-ads-mcp](#thainajardim-google-ads-mcp) | `Schema Reflector` | `Python` | `stdio` | No | No | Read-Only | Yes | Yes | Yes | No | Yes | No | 800ms–2500ms | No | No | Single | Manual | Ultra-Low | 0★ (Active) |
-| [yeswanthreddyk/Google-ads-MCP](#yeswanthreddyk-google-ads-mcp) | `FastMCP Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | Yes | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [AfzalAliSolangi/GoogleAds-MCP-Server](#afzalalisolangi-googleads-mcp-server) | `Edge Gateway` | `TypeScript` | `stdio` | Full | No | Read-Only | Yes | Yes | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Ultra-Low | 0★ (Active) |
-| [Lazare-42/google-ads-mcp](#lazare-42-google-ads-mcp) | `Native Rust Proxy` | `Rust` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Auto | Ultra-Low | 0★ (Active) |
-| [kiarashedraki/google-ads-mcp](#kiarashedraki-google-ads-mcp) | `TypeScript Proxy` | `TypeScript` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [cristiandrei1234/google-ads-mcp](#cristiandrei1234-google-ads-mcp) | `TypeScript Proxy` | `TypeScript` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [atlasbarinc/google-ads-mcp](#atlasbarinc-google-ads-mcp) | `Analytical Cache` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | WAL | Sub-5ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [epave/google-ads-mcp](#epave-google-ads-mcp) | `Guarded Mutator` | `Python` | `stdio` | No | Yes | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [rgellis/google-ads-mcp](#rgellis-google-ads-mcp) | `Guarded Mutator` | `Python` | `stdio` | No | Yes | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [abdulrhmanalhur/google-ads-MCP](#abdulrhmanalhur-google-ads-mcp) | `Guarded Mutator` | `Python` | `stdio` | No | Yes | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [matheusslg/google-ads-mcp](#matheusslg-google-ads-mcp) | `Guarded Mutator` | `Python` | `stdio` | No | Yes | Yes | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [locomotive-agency/google-ads-mcp](#locomotive-agency-google-ads-mcp) | `Spend Protector` | `Python` | `stdio` | No | Yes | Yes | Yes | No | No | No | No | No | 800ms–2500ms | React | Modal | Dynamic | Manual | Low | 0★ (Active) |
-| [noordevtech/GoogleAds-mcp](#noordevtech-googleads-mcp) | `MCC Agency Gateway` | `Python` | `stdio` | No | Yes | Yes | Yes | Yes | Yes | No | Yes | WAL | Sub-5ms | No | No | Dynamic | Auto | Low | 0★ (Active) |
-| [ConnorCallison/google-ads-mcp](#connorcallison-google-ads-mcp) | `MCC Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 0★ (Active) |
-| [connorstearns/mcp-google-ads](#connorstearns-mcp-google-ads) | `Auth Daemon` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Auto | Low | 0★ (Active) |
-| [abhibavishi/google-ads-mcp](#abhibavishi-google-ads-mcp) | `Agency Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 0★ (Active) |
-| [shivpanks19/mcp-google-ads](#shivpanks19-mcp-google-ads) | `Agency Proxy` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Dynamic | Manual | Low | 0★ (Active) |
-| [alexeykozyavkin/google-ads-mcp](#alexeykozyavkin-google-ads-mcp) | `Analytics Helper` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [Codyp10/Google-Ads-MCP](#codyp10-google-ads-mcp) | `Analytics Helper` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [iflow-mcp/itallstartedwithaidea-google-ads-mcp](#iflow-mcp-itallstartedwithaidea-google-ads-mcp) | `Marketing Bridge` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [zelentsov-dev/google-ads-mcp](#zelentsov-dev-google-ads-mcp) | `Analytics Bridge` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [huzaifa-hb/Google-Ads-MCP](#huzaifa-hb-google-ads-mcp) | `Analytics Bridge` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
-| [mailmanar/google-ads-mcp](#mailmanar-google-ads-mcp) | `Analytics Bridge` | `Python` | `stdio` | No | No | Read-Only | Yes | No | No | No | No | No | 800ms–2500ms | No | No | Single | Manual | Low | 0★ (Active) |
+Indicator Legend:
+
+- **SearchStream:** `✅ gRPC` (high-throughput gRPC streaming) vs `❌` (paged search)
+- **Mutations:** `✏️ Live` (direct account modification) · `🛡️ Dry-Run` (`validate_only` dry-run preflight) · `👁️ Read-Only` (reporting queries only)
+- **PMax / Shop:** `✅ Full` (Performance Max and Shopping supported) vs `❌` (Search-only)
+- **MCC Multi:** `✅ Dynamic` (dynamic `login-customer-id` header switching) vs `❌` (single customer account)
+- **SQLite Cache:** `✅ Sub-5ms` (embedded SQLite WAL database with background sync) vs `❌` (live API proxy)
+- **MCP Apps UI:** `✅ React` (interactive React widgets for human approval) vs `❌` (text-only)
+- **Auth Daemon:** `✅ Auto` (proactive 60-min token refresh loop) vs `❌` (manual refresh)
+
+| Project | Stars | Runtime | SearchStream | Mutations | PMax / Shop | MCC Multi | SQLite Cache | MCP Apps UI | Auth Daemon |
+|---|---|---|---|---|---|---|---|---|---|
+| [nowork-studio/notfair-plugin](#nowork-studio-notfair-plugin) | ⭐ 3,840 | `TS` | ❌ | ✏️ Live | ✅ Full | ✅ Dynamic | ✅ Sub-5ms | ✅ React | ✅ Auto |
+| [irinabuht12-oss/google-meta-ads-ga4-mcp](#irinabuht12-oss-google-meta-ads-ga4-mcp) | ⭐ 2,033 | `Poly` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [googleads/google-ads-mcp](#googleads-google-ads-mcp) | ⭐ 969 | `Py` | ✅ gRPC | 🛡️ Dry-Run | ✅ Full | ✅ Dynamic | ✅ Sub-5ms | ❌ | ✅ Auto |
+| [cohnen/mcp-google-ads](#cohnen-mcp-google-ads) | ⭐ 710 | `Py` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [kLOsk/adloop](#klosk-adloop) | ⭐ 266 | `Py` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ✅ Sub-5ms | ❌ | ✅ Auto |
+| [TheMattBerman/google-ads-copilot](#themattberman-google-ads-copilot) | ⭐ 235 | `Shell` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [thatrebeccarae/claude-marketing](#thatrebeccarae-claude-marketing) | ⭐ 147 | `Py` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [gomarble-ai/google-ads-mcp-server](#gomarble-ai-google-ads-mcp-server) | ⭐ 144 | `Py` | ❌ | ✏️ Live | ✅ Full | ✅ Dynamic | ✅ Sub-5ms | ❌ | ✅ Auto |
+| [mathiaschu/google-ads-analyzer](#mathiaschu-google-ads-analyzer) | ⭐ 67 | `Py` | ❌ | 👁️ Read-Only | ✅ Full | ❌ | ❌ | ❌ | ❌ |
+| [FGRibreau/mcp-google-ads](#fgribreau-mcp-google-ads) | ⭐ 52 | `Rust` | ✅ gRPC | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [TrueClicks/google-ads-mcp-js](#trueclicks-google-ads-mcp-js) | ⭐ 50 | `JS` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [grantweston/google-ads-mcp-complete](#grantweston-google-ads-mcp-complete) | ⭐ 25 | `Py` | ❌ | ✏️ Live | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [promobase/google-ads-mcp](#promobase-google-ads-mcp) | ⭐ 22 | `Py` | ❌ | ✏️ Live | ❌ | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [johnoconnor0/google-ads-mcp](#johnoconnor0-google-ads-mcp) | ⭐ 16 | `Py` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ✅ Auto |
+| [davidmosiah/google-ads-mcp-unofficial](#davidmosiah-google-ads-mcp-unofficial) | ⭐ 4 | `TS` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [akelaonline/MCP-Google-Ads](#akelaonline-mcp-google-ads) | ⭐ 4 | `Py` | ❌ | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ✅ Sub-5ms | ❌ | ❌ |
+| [itallstartedwithaidea/google-ads-mcp](#itallstartedwithaidea-google-ads-mcp) | ⭐ 3 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [minholi/google-ads-mcp](#minholi-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [mharnett/mcp-google-ads](#mharnett-mcp-google-ads) | ⭐ 1 | `TS` | ❌ | 👁️ Read-Only | ❌ | ❌ | ✅ Sub-5ms | ❌ | ❌ |
+| [LucasSantana-Dev/google-ads-mcp](#lucassantana-dev-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ✅ Sub-5ms | ❌ | ❌ |
+| [konradbachowski/google-ads-mcp](#konradbachowski-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [growmedevelopment/google-ads-mcp](#growmedevelopment-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [ball2jh/google-ads-mcp](#ball2jh-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [ameydabhade/google-ads-mcp](#ameydabhade-google-ads-mcp) | ⭐ 1 | `TS` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ✅ React | ❌ |
+| [monsieurgoodmood/google-ads-mcp-plus](#monsieurgoodmood-google-ads-mcp-plus) | ⭐ 1 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ✅ React | ❌ |
+| [dhawalshah/google-ads-mcp](#dhawalshah-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [BrandonMiller18/google-ads-mcp](#brandonmiller18-google-ads-mcp) | ⭐ 1 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [BinarCode/google-ads-mcp-http](#binarcode-google-ads-mcp-http) | ⭐ 0 | `TS` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [AfzalAliSolangi/GoogleAds-MCP-Server](#afzalalisolangi-googleads-mcp-server) | ⭐ 0 | `TS` | ✅ gRPC | 👁️ Read-Only | ✅ Full | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [cristiandrei1234/google-ads-mcp](#cristiandrei1234-google-ads-mcp) | ⭐ 0 | `TS` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [atlasbarinc/google-ads-mcp](#atlasbarinc-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ✅ Sub-5ms | ❌ | ❌ |
+| [epave/google-ads-mcp](#epave-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [rgellis/google-ads-mcp](#rgellis-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [abdulrhmanalhur/google-ads-MCP](#abdulrhmanalhur-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [matheusslg/google-ads-mcp](#matheusslg-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | ✏️ Live | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [locomotive-agency/google-ads-mcp](#locomotive-agency-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | ✏️ Live | ❌ | ✅ Dynamic | ❌ | ✅ React | ❌ |
+| [noordevtech/GoogleAds-mcp](#noordevtech-googleads-mcp) | ⭐ 0 | `Py` | ❌ | ✏️ Live | ✅ Full | ✅ Dynamic | ✅ Sub-5ms | ❌ | ✅ Auto |
+| [ConnorCallison/google-ads-mcp](#connorcallison-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [connorstearns/mcp-google-ads](#connorstearns-mcp-google-ads) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ✅ Auto |
+| [abhibavishi/google-ads-mcp](#abhibavishi-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [shivpanks19/mcp-google-ads](#shivpanks19-mcp-google-ads) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ✅ Dynamic | ❌ | ❌ | ❌ |
+| [alexeykozyavkin/google-ads-mcp](#alexeykozyavkin-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [Codyp10/Google-Ads-MCP](#codyp10-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [huzaifa-hb/Google-Ads-MCP](#huzaifa-hb-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
+| [mailmanar/google-ads-mcp](#mailmanar-google-ads-mcp) | ⭐ 0 | `Py` | ❌ | 👁️ Read-Only | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 ---
 
 ## 1. Query and report with GAQL
 
-*13 projects. High-throughput SearchStream pipelines, dynamic schema reflection, and lightweight proxies for executing GAQL queries.*
+*8 projects. High-throughput SearchStream pipelines, dynamic schema reflection, and lightweight proxies for executing GAQL queries.*
 
 ### Official DevRel gateways and gRPC SearchStream pipelines
 
@@ -118,34 +120,29 @@ Official links: [Google Ads API Documentation](https://developers.google.com/goo
 
 ### Dynamic schema reflection and field discovery
 
-*3 projects. Minimalist reflection servers querying GoogleAdsFieldService at runtime to eliminate schema drift and token bloat.*
+*1 project. Minimalist reflection servers querying GoogleAdsFieldService at runtime to eliminate schema drift and token bloat.*
 
 | Project | What it does |
 |---|---|
-| <a id="thainajardim-google-ads-mcp"></a>[**ThainaJardim/google-ads-mcp**](https://github.com/ThainaJardim/google-ads-mcp) | Minimalist 3-tool reflection server that queries GoogleAdsFieldService dynamically at runtime, consuming only ~350 tokens per turn. Eliminates schema bloat by letting LLMs inspect available GAQL fields before constructing queries. |
 | <a id="davidmosiah-google-ads-mcp-unofficial"></a>[**davidmosiah/google-ads-mcp-unofficial**](https://github.com/davidmosiah/google-ads-mcp-unofficial) | TypeScript reflection wrapper offering dynamic metadata inspection and consolidated reporting across active campaign entities. Designed for Cursor and Claude Desktop developers wanting zero-dependency Node installation. |
-| <a id="yeswanthreddyk-google-ads-mcp"></a>[**yeswanthreddyk/Google-ads-MCP**](https://github.com/yeswanthreddyk/Google-ads-MCP) | FastMCP Python server with 10 consolidated tools and Pydantic v2 schemas providing explicit type hints for LLM tool calling. Balances schema clarity with moderate token consumption across standard reporting endpoints. |
 
 ### Zero-SDK lean REST and minimal GAQL execution
 
-*4 projects. Lightweight proxies bypassing heavy SDK binaries in favor of direct HTTP calls, raw JSON, and compact GAQL responses.*
+*3 projects. Lightweight proxies bypassing heavy SDK binaries in favor of direct HTTP calls, raw JSON, and compact GAQL responses.*
 
 | Project | What it does |
 |---|---|
 | <a id="cohnen-mcp-google-ads"></a>[**cohnen/mcp-google-ads**](https://github.com/cohnen/mcp-google-ads) | Community flagship with 710+ stars that completely bypasses the 500MB Python SDK in favor of direct requests.post REST calls. Serves official GAQL syntax references via gaql:// MCP resources for in-context query synthesis. |
-| <a id="x777-mcp-google-ads"></a>[**x777/mcp-google-ads**](https://github.com/x777/mcp-google-ads) | Python FastMCP server executing direct REST calls against Google Ads API v23 with 28 targeted tools. Uses Pydantic data modeling to serialize campaign and ad group metrics without SDK overhead. |
 | <a id="afzalalisolangi-googleads-mcp-server"></a>[**AfzalAliSolangi/GoogleAds-MCP-Server**](https://github.com/AfzalAliSolangi/GoogleAds-MCP-Server) | TypeScript MCP server optimized for Cloudflare Workers and edge execution with strict read-only guarantees. Implements streaming response parsing and web-standard OAuth token forwarding for serverless agents. |
 | <a id="minholi-google-ads-mcp"></a>[**minholi/google-ads-mcp**](https://github.com/minholi/google-ads-mcp) | Compact Python proxy focusing on campaign-level KPI extraction and automated daily budget reporting. Returns sanitized Markdown summary tables directly formatted for LLM executive summaries. |
 
 ### Edge runtimes and compiled native proxies
 
-*4 projects. Compiled Rust and high-performance TypeScript servers designed for serverless, low-memory, and edge execution.*
+*2 projects. Compiled Rust and high-performance TypeScript servers designed for serverless, low-memory, and edge execution.*
 
 | Project | What it does |
 |---|---|
 | <a id="fgribreau-mcp-google-ads"></a>[**FGRibreau/mcp-google-ads**](https://github.com/FGRibreau/mcp-google-ads) | Compiled Rust MCP server delivering sub-millisecond execution times and minimal memory footprint (<15MB RSS). Ideal for high-concurrency enterprise microservices executing continuous GAQL search streams. |
-| <a id="lazare-42-google-ads-mcp"></a>[**Lazare-42/google-ads-mcp**](https://github.com/Lazare-42/google-ads-mcp) | High-performance Rust implementation with native Service Account authentication and automated Google OAuth token caching. Built for headless Docker agent containers requiring zero user interaction during execution. |
-| <a id="kiarashedraki-google-ads-mcp"></a>[**kiarashedraki/google-ads-mcp**](https://github.com/kiarashedraki/google-ads-mcp) | TypeScript MCP implementation using environment refresh tokens and pre-compiled GAQL query templates. Targets modern JavaScript agent runtimes with minimal configuration overhead. |
 | <a id="cristiandrei1234-google-ads-mcp"></a>[**cristiandrei1234/google-ads-mcp**](https://github.com/cristiandrei1234/google-ads-mcp) | TypeScript server wrapping core reporting services with structured zod validation schemas. Offers reliable reporting for campaigns, ad groups, and keyword performance in Node-based agent stacks. |
 
 ---
@@ -177,15 +174,14 @@ Official links: [Google Ads API Documentation](https://developers.google.com/goo
 
 ## 3. Automate campaign mutations, budgets, and bid strategies
 
-*10 projects. Tools capable of modifying live accounts—adjusting budgets, pausing ad groups, applying recommendations, and managing keyword lists.*
+*9 projects. Tools capable of modifying live accounts—adjusting budgets, pausing ad groups, applying recommendations, and managing keyword lists.*
 
 ### Direct REST campaign mutation and bid/budget setters
 
-*3 projects. Servers providing direct write endpoints for modifying campaign budgets, pausing ad groups, and adjusting bid amounts.*
+*2 projects. Servers providing direct write endpoints for modifying campaign budgets, pausing ad groups, and adjusting bid amounts.*
 
 | Project | What it does |
 |---|---|
-| <a id="saifshabsug-google-ads-mcp-pro"></a>[**saifshabsug/google-ads-mcp-pro**](https://github.com/saifshabsug/google-ads-mcp-pro) | Dedicated mutation server offering 43 write endpoints to pause campaigns, adjust daily budgets, and change keyword bids directly. Eliminates read-only passivity for agents acting as automated PPC bid managers. |
 | <a id="grantweston-google-ads-mcp-complete"></a>[**grantweston/google-ads-mcp-complete**](https://github.com/grantweston/google-ads-mcp-complete) | Comprehensive multi-service wrapper exposing CampaignService, AdGroupService, and AdGroupCriterionService mutation tools. Built for automated bid adjustments, ad schedule updates, and negative keyword list synchronization. |
 | <a id="promobase-google-ads-mcp"></a>[**promobase/google-ads-mcp**](https://github.com/promobase/google-ads-mcp) | Agency-focused mutation proxy allowing agents to update promotional budgets, toggle seasonal ad groups, and pause ad spend. Incorporates account ID validation to prevent cross-client budget pollution. |
 
@@ -238,7 +234,7 @@ Official links: [Google Ads API Documentation](https://developers.google.com/goo
 
 ## 5. Manage agency access and multi-account MCC hierarchies
 
-*10 projects. Manager Account (MCC) hierarchies, multi-client routing, 60-minute OAuth token refresh daemons, and credential vaults.*
+*9 projects. Manager Account (MCC) hierarchies, multi-client routing, 60-minute OAuth token refresh daemons, and credential vaults.*
 
 ### Dynamic MCC switching via login-customer-id routing
 
@@ -262,14 +258,13 @@ Official links: [Google Ads API Documentation](https://developers.google.com/goo
 
 ### Multi-tenant credential vaults and agency proxies
 
-*4 projects. Secure multi-client credential isolation and agency gateway proxies designed for enterprise PPC operations.*
+*3 projects. Secure multi-client credential isolation and agency gateway proxies designed for enterprise PPC operations.*
 
 | Project | What it does |
 |---|---|
 | <a id="dhawalshah-google-ads-mcp"></a>[**dhawalshah/google-ads-mcp**](https://github.com/dhawalshah/google-ads-mcp) | Multi-tenant credential isolation server supporting distinct customer OAuth configurations stored securely in environment namespaces. Prevents accidental cross-tenant data leakage in agency environments. |
 | <a id="abhibavishi-google-ads-mcp"></a>[**abhibavishi/google-ads-mcp**](https://github.com/abhibavishi/google-ads-mcp) | Python agency gateway with 41 commits providing client account isolation and structured metric reporting. Includes safety checks to ensure queries target valid customer IDs. |
 | <a id="shivpanks19-mcp-google-ads"></a>[**shivpanks19/mcp-google-ads**](https://github.com/shivpanks19/mcp-google-ads) | Python proxy supporting dynamic credential switching across multiple Google Cloud project client IDs. Suitable for consultancy teams managing disparate client infrastructure. |
-| <a id="videngrowth-public-google-ads-mcp"></a>[**VidenGrowth/public-google-ads-mcp**](https://github.com/VidenGrowth/public-google-ads-mcp) | Open agency connector from Viden Growth facilitating multi-account performance aggregation and automated client reporting. Tailored for agency media planners reviewing cross-client spend. |
 
 ---
 
@@ -299,28 +294,25 @@ Official links: [Google Ads API Documentation](https://developers.google.com/goo
 
 ## 7. Integrate agentic workflows and multi-platform marketing stacks
 
-*9 projects. Autonomous Claude Code marketing skills, CLI copilot environments, and unified Google Ads + Meta Ads + GA4 growth platforms.*
+*6 projects. Autonomous Claude Code marketing skills, CLI copilot environments, and unified Google Ads + Meta Ads + GA4 growth platforms.*
 
 ### Autonomous Claude Code marketing skills and CLI copilots
 
-*3 projects. Ready-to-run Claude Code agent skills and terminal harnesses that execute ad audits and copy generation directly in CLI.*
+*2 projects. Ready-to-run Claude Code agent skills and terminal harnesses that execute ad audits and copy generation directly in CLI.*
 
 | Project | What it does |
 |---|---|
 | <a id="thatrebeccarae-claude-marketing"></a>[**thatrebeccarae/claude-marketing**](https://github.com/thatrebeccarae/claude-marketing) | Popular Claude Code skill collection (⭐ 147) integrating Google Ads audit routines directly into terminal-native agent workflows. Features pre-engineered prompts and scripts for analyzing Search campaign performance. |
 | <a id="themattberman-google-ads-copilot"></a>[**TheMattBerman/google-ads-copilot**](https://github.com/TheMattBerman/google-ads-copilot) | High-profile copilot repository (⭐ 235) orchestrating Docker containers and agentic scripts to monitor live ad accounts. Generates proactive Telegram and terminal alerts when budget pacing deviates from target thresholds. |
-| <a id="irinabuht12-oss-marketing-skills"></a>[**irinabuht12-oss/marketing-skills**](https://github.com/irinabuht12-oss/marketing-skills) | Comprehensive marketing skill repository (⭐ 1,638) containing ready-to-run markdown skill instructions for Google Ads and paid media optimization. Teaches agents how to diagnose Quality Score drops and structure RSA copy. |
 
 ### Unified Google Ads, Meta Ads, and GA4 analytics bridges
 
-*6 projects. Multi-channel marketing suites bridging Google Ads performance data with Meta Ads and Google Analytics 4 telemetry.*
+*4 projects. Multi-channel marketing suites bridging Google Ads performance data with Meta Ads and Google Analytics 4 telemetry.*
 
 | Project | What it does |
 |---|---|
 | <a id="irinabuht12-oss-google-meta-ads-ga4-mcp"></a>[**irinabuht12-oss/google-meta-ads-ga4-mcp**](https://github.com/irinabuht12-oss/google-meta-ads-ga4-mcp) | Massive multi-platform suite (⭐ 2,033) uniting Google Ads, Meta Ads, and Google Analytics 4 under a single MCP server. Enables cross-channel attribution queries and blended ROAS calculations within a unified agent context. |
 | <a id="itallstartedwithaidea-google-ads-mcp"></a>[**itallstartedwithaidea/google-ads-mcp**](https://github.com/itallstartedwithaidea/google-ads-mcp) | Multi-channel marketing server bridging Google Ads performance data with Meta Ads and GA4 reporting pipelines. Built for performance marketers analyzing blended return on ad spend across paid media channels. |
-| <a id="iflow-mcp-itallstartedwithaidea-google-ads-mcp"></a>[**iflow-mcp/itallstartedwithaidea-google-ads-mcp**](https://github.com/iflow-mcp/itallstartedwithaidea-google-ads-mcp) | Active downstream fork maintaining cross-platform marketing tools with updated dependency pins and MCP specification compliance. Supports cross-channel reporting for Search and Social campaigns. |
-| <a id="zelentsov-dev-google-ads-mcp"></a>[**zelentsov-dev/google-ads-mcp**](https://github.com/zelentsov-dev/google-ads-mcp) | Marketing analytics server providing unified data extraction for Google Ads campaigns and Google Analytics 4 conversion events. Simplifies attribution reporting in agent workflows. |
 | <a id="huzaifa-hb-google-ads-mcp"></a>[**huzaifa-hb/Google-Ads-MCP**](https://github.com/huzaifa-hb/Google-Ads-MCP) | Python marketing proxy with 63 commits connecting Google Ads campaign telemetry with ecommerce store conversion tracking. Formats ROAS summaries for automated client updates. |
 | <a id="mailmanar-google-ads-mcp"></a>[**mailmanar/google-ads-mcp**](https://github.com/mailmanar/google-ads-mcp) | Cross-channel reporting server with 66 commits providing consolidated spend tracking across Google Ads and supplementary advertising channels. Focuses on daily pacing alerts and budget anomaly detection. |
 
