@@ -3,8 +3,8 @@
 **Audit Version:** 1.0.0  
 **Evaluation Scope:** Google Ads MCP Ecosystem Candidate Discovery  
 **Total Discovered Candidate Pool:** 436  
-**Evaluated Core Cohort:** 45  
-**Total Quarantined Exclusions:** 391  
+**Evaluated Core Cohort:** 44  
+**Total Quarantined Exclusions:** 392  
 
 ---
 
@@ -26,7 +26,7 @@ Exclusion Criteria:
 - **DORMANT_INACTIVE:** 314 repositories
 - **EMPTY_OR_UNMODIFIED_FORK:** 1 repository
 - **NON_MCP_STANDALONE_SCRIPT:** 30 repositories
-- **SHALLOW_MARKETING_STUB:** 46 repositories
+- **SHALLOW_MARKETING_STUB:** 47 repositories
 
 ---
 
@@ -392,7 +392,7 @@ Exclusion Criteria:
 | 29 | [`langchain-ai/paid-media-agent`](https://github.com/langchain-ai/paid-media-agent) | 61 | 16 | Python | 2026-09-14 | Open-source paid media agent for Google Ads, Meta Ads, Reddi |
 | 30 | [`cassiorox/ClaudePRO`](https://github.com/cassiorox/ClaudePRO) | 7 | 2 | Python | 2026-09-21 | Framework Claude Code pra gestores de trafego (agencias e eu |
 
-### Category: `SHALLOW_MARKETING_STUB` (46 repositories)
+### Category: `SHALLOW_MARKETING_STUB` (47 repositories)
 
 | # | Repository | Stars | Forks | Language | Last Push | Exclusion Reason |
 |---|---|---|---|---|---|---|
@@ -442,3 +442,4 @@ Exclusion Criteria:
 | 44 | [`irinabuht12-oss/marketing-skills`](https://github.com/irinabuht12-oss/marketing-skills) | 1638 | 210 | Markdown | 2026-03-25 | Pure Markdown prompt/skill repository without executable MCP server code; retained irinabuht12-oss/google-meta-ads-ga4-mcp |
 | 45 | [`saifshabsug/google-ads-mcp-pro`](https://github.com/saifshabsug/google-ads-mcp-pro) | 1 | 0 | Python | 2025-10-18 | Single-commit marketing README with trivial wrapper code |
 | 46 | [`VidenGrowth/public-google-ads-mcp`](https://github.com/VidenGrowth/public-google-ads-mcp) | 2 | 0 | Python | 2025-11-01 | 3-commit thin agency wrapper, lowest benchmark composite score (44.9%) |
+| 47 | [`irinabuht12-oss/google-meta-ads-ga4-mcp`](https://github.com/irinabuht12-oss/google-meta-ads-ga4-mcp) | 2033 | 240 | Polyglot | 2026-03-25 | Zero executable open-source code; contains only markdown guides and JSON config pointing to commercial Ryze AI connector |
