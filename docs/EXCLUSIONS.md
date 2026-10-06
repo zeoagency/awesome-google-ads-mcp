@@ -448,57 +448,57 @@ Exclusion Criteria:
 
 | Name | Repo URL | Reason | Date |
 |---|---|---|---|
-| `rgellis-google-ads-mcp` | https://github.com/rgellis/google-ads-mcp | Finalist #6 in FINAL-REPORT.md (score 22/50); verdict maybe; Burst-then-quiet (118/140 commits in Apr 2026, 0 commits in last 5.5 months, 0 stars); 520 tools cause catastrophic 174k-token context blowup. Default: DELETE. | 2026-10-06 |
-| `davidmosiah-google-ads-mcp-unofficial` | https://github.com/davidmosiah/google-ads-mcp-unofficial | Verdict maybe; 4/12 active months, 8 npm versions (~450–900/mo downloads); working TypeScript stdio/Express server, but injects irrelevant Delx consumer wellness profile bloat. Default: DELETE. | 2026-10-06 |
-| `akelaonline-mcp-google-ads` | https://github.com/akelaonline/MCP-Google-Ads | Verdict maybe; 241 commits, 19 tags in Aug 2026 with SQLite mutation guards, but registers 466 tools causing prompt exhaustion and silent since 2026-09-03. Default: DELETE. | 2026-10-06 |
-| `amekala-ads-mcp` | https://github.com/amekala/ads-mcp | Finalist #9 in FINAL-REPORT.md (score 29/50); unverified vendor claims (400+ tools), closed proprietary backend, companion plugin previously quarantined in EXCLUSIONS.md #238. | 2026-10-06 |
-| `markifact-markifact-mcp` | https://github.com/markifact/markifact-mcp | Finalist #10 in FINAL-REPORT.md (score 27/50); zero executable open-source server code in repository (JSON/manifest stubs only, points to hosted cloud); quarantined in EXCLUSIONS.md #231. | 2026-10-06 |
-| `cesteral-mcp-open-advertising` | https://github.com/cesteral/mcp-open-advertising | Finalist #7 in FINAL-REPORT.md (score 28/50); mandatory startup OAuth token exchange crashes stdio without live Google credentials (HTTP 401); outdated API v23; self-declared untested live in production. | 2026-10-06 |
-| `windsor-ai-google-ads-mcp` | https://github.com/windsor-ai | Commercial multi-platform SaaS data connector; no public open-source repository or standalone MCP codebase exists. | 2026-10-06 |
-| `irinabuht12-oss-google-meta-ads-ga4-mcp` | https://github.com/irinabuht12-oss/google-ads-meta-ads-mcp | Not an MCP server; commercial API wrapper and config stub; registers 0 MCP tools; requires external paid Ryze AI subscription. | 2026-10-06 |
-| `irinabuht12-oss-marketing-skills` | https://github.com/irinabuht12-oss/marketing-skills | Not an MCP server; markdown prompt & skill library for Claude Desktop / Windsurf without executable MCP server runtime. | 2026-10-06 |
-| `mathiaschu-google-ads-analyzer` | https://github.com/mathiaschu/google-ads-analyzer | Not an MCP server; standalone Python analysis script / Streamlit UI prototype; registers 0 MCP tools; external server reference 404s. | 2026-10-06 |
-| `nowork-studio-notfair-plugin` | https://github.com/nowork-studio/notfair-plugin | Not an MCP server; Claude / Cursor IDE instruction bundle and markdown guidelines with no MCP protocol transport implementation. | 2026-10-06 |
-| `thatrebeccarae-claude-marketing` | https://github.com/thatrebeccarae/claude-marketing | Not an MCP server; markdown system prompt library and custom instructions; contains no executable MCP runtime. | 2026-10-06 |
-| `themattberman-google-ads-copilot` | https://github.com/TheMattBerman/google-ads-copilot | Not an MCP server; desktop AI copilot configuration profile; contains no MCP server endpoints or wire protocol handlers. | 2026-10-06 |
-| `abdulrhmanalhur-google-ads-mcp` | https://github.com/abdulrhmanalhur/google-ads-MCP | Verdict 'no'; stale Promobase fork; last commit 2026-03-22, 0 releases, 0 usage. | 2026-10-06 |
-| `abhibavishi-google-ads-mcp` | https://github.com/abhibavishi/google-ads-mcp | Burst-then-quiet; last commit 2026-07-07, 0 stars, 0 forks, unreleased on PyPI, 0 external users. | 2026-10-06 |
-| `afzalalisolangi-googleads-mcp-server` | https://github.com/AfzalAliSolangi/GoogleAds-MCP-Server | Verdict 'no'; 5 total commits, abandoned since 2026-07-07, 0 users, 0 releases. | 2026-10-06 |
-| `alexeykozyavkin-google-ads-mcp` | https://github.com/alexeykozyavkin/google-ads-mcp | Verdict 'no'; all 21 commits in 1 day, abandoned since 2026-08-19, 0 users. | 2026-10-06 |
-| `ameydabhade-google-ads-mcp` | https://github.com/ameydabhade/google-ads-mcp | Burst-then-quiet; 6 commits, last commit 2026-08-07, 0 users, unreleased on npm. | 2026-10-06 |
-| `atlasbarinc-google-ads-mcp` | https://github.com/atlasbarinc/google-ads-mcp | Verdict 'no'; stale fork inheriting 58 of 61 commits, abandoned since 2026-04-06, 0 users. | 2026-10-06 |
-| `ball2jh-google-ads-mcp` | https://github.com/ball2jh/google-ads-mcp | Verdict 'no'; 42 of 43 commits in single day, abandoned since 2026-04-30, 0 users. | 2026-10-06 |
-| `binarcode-google-ads-mcp-http` | https://github.com/BinarCode/google-ads-mcp-http | Verdict 'no'; only 2 own commits, abandoned since 2026-01-26, 0 users. | 2026-10-06 |
-| `brandonmiller18-google-ads-mcp` | https://github.com/BrandonMiller18/google-ads-mcp | Verdict 'no'; GoMarble copy with 4 own commits, abandoned since 2026-07-27, 0 users. | 2026-10-06 |
-| `codyp10-google-ads-mcp` | https://github.com/Codyp10/Google-Ads-MCP | Verdict 'no'; stale fork, abandoned since 2026-05-11, 0 users. | 2026-10-06 |
-| `cohnen-mcp-google-ads` | https://github.com/cohnen/mcp-google-ads | Verdict 'no'; original single-file engine abandoned since 2025-10-16, hardcoded to sunsetted API v19. | 2026-10-06 |
-| `connorcallison-google-ads-mcp` | https://github.com/ConnorCallison/google-ads-mcp | Burst-then-quiet; 11 commits, last commit 2026-07-23, missing LICENSE file, 0 users. | 2026-10-06 |
-| `connorstearns-mcp-google-ads` | https://github.com/connorstearns/mcp-google-ads | Verdict 'no'; abandoned since 2026-06-03, 0 users, unmaintained. | 2026-10-06 |
-| `cristiandrei1234-google-ads-mcp` | https://github.com/cristiandrei1234/google-ads-mcp | Burst-then-quiet; 30 commits, last commit 2026-08-19, restrictive non-commercial license, 0 users. | 2026-10-06 |
-| `dhawalshah-google-ads-mcp` | https://github.com/dhawalshah/google-ads-mcp | Burst-then-quiet; 24 commits, last commit 2026-09-22, dead Cohnen clone, 0 external users. | 2026-10-06 |
-| `epave-google-ads-mcp` | https://github.com/epave/google-ads-mcp | Too-new-to-judge; 48 commits in 9 days in Sep 2026 generated by Cursor AI agent, experimental duckdb dev dependency, 0 external users. | 2026-10-06 |
-| `gomarble-ai-google-ads-mcp-server` | https://github.com/gomarble-ai/google-ads-mcp-server | Burst-then-quiet; only 2 commits in last 12 months, stagnant vendor repo since 2026-08-05. | 2026-10-06 |
-| `grantweston-google-ads-mcp-complete` | https://github.com/grantweston/google-ads-mcp-complete | Verdict 'no'; abandoned since 2025-09-02, hardcoded to API v21. | 2026-10-06 |
-| `huzaifa-hb-google-ads-mcp` | https://github.com/huzaifa-hb/Google-Ads-MCP | Burst-then-quiet; 63 commits in 7 days, stagnant since 2026-06-11, 0 users, npm 404 Not Found. | 2026-10-06 |
-| `iflow-mcp-itallstartedwithaidea-google-ads-mcp` | https://github.com/iflow-mcp/itallstartedwithaidea-google-ads-mcp | Classified Abandoned; automated mirror bot repo with 0 own commits, last pushed 2026-04-12. | 2026-10-06 |
-| `itallstartedwithaidea-google-ads-mcp` | https://github.com/itallstartedwithaidea/google-ads-mcp | Verdict 'no'; educational clone, last commit 2026-05-04, 0 external users. | 2026-10-06 |
-| `johnoconnor0-google-ads-mcp` | https://github.com/johnoconnor0/google-ads-mcp | Verdict 'no'; 23 of 31 commits are automated bot bumps, stagnant since 2026-09-28. | 2026-10-06 |
-| `kiarashedraki-google-ads-mcp` | https://github.com/kiarashedraki/google-ads-mcp | Too-new-to-judge; 2 commits in Sep 2026, no tests, unverified live mutations, 36 downloads. | 2026-10-06 |
-| `konradbachowski-google-ads-mcp` | https://github.com/konradbachowski/google-ads-mcp | Verdict 'no'; 6 commits, abandoned since 2026-06-22, 0 users. | 2026-10-06 |
-| `lazare-42-google-ads-mcp` | https://github.com/Lazare-42/google-ads-mcp | Too-new-to-judge; 5 commits in Aug–Sep 2026, missing LICENSE file, service-account only, 0 users. | 2026-10-06 |
-| `locomotive-agency-google-ads-mcp` | https://github.com/locomotive-agency/google-ads-mcp | Verdict 'no'; 14 commits, last commit 2026-08-07, minimal wrapper with weak usage. | 2026-10-06 |
-| `lucassantana-dev-google-ads-mcp` | https://github.com/LucasSantana-Dev/google-ads-mcp | Burst-then-quiet; 8 commits, last commit 2026-07-01, missing LICENSE file, 0 users. | 2026-10-06 |
-| `mailmanar-google-ads-mcp` | https://github.com/mailmanar/google-ads-mcp | Verdict 'no'; 1 own commit of 66, abandoned since 2026-05-26, 0 users. | 2026-10-06 |
-| `matheusslg-google-ads-mcp` | https://github.com/matheusslg/google-ads-mcp | Burst-then-quiet; 57 commits in June, stagnant since 2026-07-06, 0 users. | 2026-10-06 |
-| `minholi-google-ads-mcp` | https://github.com/minholi/google-ads-mcp | Burst-then-quiet; 44 commits in April, stagnant since 2026-09-10, 0 users. | 2026-10-06 |
-| `monsieurgoodmood-google-ads-mcp-plus` | https://github.com/monsieurgoodmood/google-ads-mcp-plus | Verdict 'no'; 10 commits, abandoned since 2026-07-30, 0 users. | 2026-10-06 |
-| `noordevtech-googleads-mcp` | https://github.com/noordevtech/GoogleAds-mcp | Verdict 'no'; 20 of 23 commits generated by Claude in a single day, abandoned since 2026-05-07. | 2026-10-06 |
-| `promobase-google-ads-mcp` | https://github.com/promobase/google-ads-mcp | Classified Abandoned; unmaintained upstream Promobase codebase, last commit 2026-04-28. | 2026-10-06 |
-| `saifshabsug-google-ads-mcp-pro` | https://github.com/saifshabsug/google-ads-mcp-pro | Classified Abandoned; last commit 2026-07-29, 0 users, validate_only defaults to False safety hazard. | 2026-10-06 |
-| `shivpanks19-mcp-google-ads` | https://github.com/shivpanks19/mcp-google-ads | Too-new-to-judge; derivative of dead Cohnen archetype, severe 87-tool bloat, requires Supabase+Sheets, unpublished. | 2026-10-06 |
-| `thainajardim-google-ads-mcp` | https://github.com/ThainaJardim/google-ads-mcp | Verdict 'no'; 2 commits, abandoned since 2026-04-09, 0 users. | 2026-10-06 |
-| `trueclicks-google-ads-mcp-js` | https://github.com/TrueClicks/google-ads-mcp-js | Verdict 'no'; repository officially archived 2026-01-07, 0 releases in 2026. | 2026-10-06 |
-| `videngrowth-public-google-ads-mcp` | https://github.com/VidenGrowth/public-google-ads-mcp | Classified Abandoned; 3 total commits, abandoned since 2026-06-30, 0 users. | 2026-10-06 |
-| `x777-mcp-google-ads` | https://github.com/x777/mcp-google-ads | Verdict 'no'; 2 commits, abandoned since 2026-05-14, dead Cohnen clone. | 2026-10-06 |
-| `yeswanthreddyk-google-ads-mcp` | https://github.com/yeswanthreddyk/Google-ads-MCP | Classified Abandoned; 2 commits, abandoned since 2026-06-27, 0 users. | 2026-10-06 |
-| `zelentsov-dev-google-ads-mcp` | https://github.com/zelentsov-dev/google-ads-mcp | Too-new-to-judge; 4 commits in 3 days in Aug 2026, 0 users, stdio only. | 2026-10-06 |
+| `rgellis-google-ads-mcp` | <https://github.com/rgellis/google-ads-mcp> | Finalist #6 in FINAL-REPORT.md (score 22/50); verdict maybe; Burst-then-quiet (118/140 commits in Apr 2026, 0 commits in last 5.5 months, 0 stars); 520 tools cause catastrophic 174k-token context blowup. Default: DELETE. | 2026-10-06 |
+| `davidmosiah-google-ads-mcp-unofficial` | <https://github.com/davidmosiah/google-ads-mcp-unofficial> | Verdict maybe; 4/12 active months, 8 npm versions (~450–900/mo downloads); working TypeScript stdio/Express server, but injects irrelevant Delx consumer wellness profile bloat. Default: DELETE. | 2026-10-06 |
+| `akelaonline-mcp-google-ads` | <https://github.com/akelaonline/MCP-Google-Ads> | Verdict maybe; 241 commits, 19 tags in Aug 2026 with SQLite mutation guards, but registers 466 tools causing prompt exhaustion and silent since 2026-09-03. Default: DELETE. | 2026-10-06 |
+| `amekala-ads-mcp` | <https://github.com/amekala/ads-mcp> | Finalist #9 in FINAL-REPORT.md (score 29/50); unverified vendor claims (400+ tools), closed proprietary backend, companion plugin previously quarantined in EXCLUSIONS.md #238. | 2026-10-06 |
+| `markifact-markifact-mcp` | <https://github.com/markifact/markifact-mcp> | Finalist #10 in FINAL-REPORT.md (score 27/50); zero executable open-source server code in repository (JSON/manifest stubs only, points to hosted cloud); quarantined in EXCLUSIONS.md #231. | 2026-10-06 |
+| `cesteral-mcp-open-advertising` | <https://github.com/cesteral/mcp-open-advertising> | Finalist #7 in FINAL-REPORT.md (score 28/50); mandatory startup OAuth token exchange crashes stdio without live Google credentials (HTTP 401); outdated API v23; self-declared untested live in production. | 2026-10-06 |
+| `windsor-ai-google-ads-mcp` | <https://github.com/windsor-ai> | Commercial multi-platform SaaS data connector; no public open-source repository or standalone MCP codebase exists. | 2026-10-06 |
+| `irinabuht12-oss-google-meta-ads-ga4-mcp` | <https://github.com/irinabuht12-oss/google-ads-meta-ads-mcp> | Not an MCP server; commercial API wrapper and config stub; registers 0 MCP tools; requires external paid Ryze AI subscription. | 2026-10-06 |
+| `irinabuht12-oss-marketing-skills` | <https://github.com/irinabuht12-oss/marketing-skills> | Not an MCP server; markdown prompt & skill library for Claude Desktop / Windsurf without executable MCP server runtime. | 2026-10-06 |
+| `mathiaschu-google-ads-analyzer` | <https://github.com/mathiaschu/google-ads-analyzer> | Not an MCP server; standalone Python analysis script / Streamlit UI prototype; registers 0 MCP tools; external server reference 404s. | 2026-10-06 |
+| `nowork-studio-notfair-plugin` | <https://github.com/nowork-studio/notfair-plugin> | Not an MCP server; Claude / Cursor IDE instruction bundle and markdown guidelines with no MCP protocol transport implementation. | 2026-10-06 |
+| `thatrebeccarae-claude-marketing` | <https://github.com/thatrebeccarae/claude-marketing> | Not an MCP server; markdown system prompt library and custom instructions; contains no executable MCP runtime. | 2026-10-06 |
+| `themattberman-google-ads-copilot` | <https://github.com/TheMattBerman/google-ads-copilot> | Not an MCP server; desktop AI copilot configuration profile; contains no MCP server endpoints or wire protocol handlers. | 2026-10-06 |
+| `abdulrhmanalhur-google-ads-mcp` | <https://github.com/abdulrhmanalhur/google-ads-MCP> | Verdict 'no'; stale Promobase fork; last commit 2026-03-22, 0 releases, 0 usage. | 2026-10-06 |
+| `abhibavishi-google-ads-mcp` | <https://github.com/abhibavishi/google-ads-mcp> | Burst-then-quiet; last commit 2026-07-07, 0 stars, 0 forks, unreleased on PyPI, 0 external users. | 2026-10-06 |
+| `afzalalisolangi-googleads-mcp-server` | <https://github.com/AfzalAliSolangi/GoogleAds-MCP-Server> | Verdict 'no'; 5 total commits, abandoned since 2026-07-07, 0 users, 0 releases. | 2026-10-06 |
+| `alexeykozyavkin-google-ads-mcp` | <https://github.com/alexeykozyavkin/google-ads-mcp> | Verdict 'no'; all 21 commits in 1 day, abandoned since 2026-08-19, 0 users. | 2026-10-06 |
+| `ameydabhade-google-ads-mcp` | <https://github.com/ameydabhade/google-ads-mcp> | Burst-then-quiet; 6 commits, last commit 2026-08-07, 0 users, unreleased on npm. | 2026-10-06 |
+| `atlasbarinc-google-ads-mcp` | <https://github.com/atlasbarinc/google-ads-mcp> | Verdict 'no'; stale fork inheriting 58 of 61 commits, abandoned since 2026-04-06, 0 users. | 2026-10-06 |
+| `ball2jh-google-ads-mcp` | <https://github.com/ball2jh/google-ads-mcp> | Verdict 'no'; 42 of 43 commits in single day, abandoned since 2026-04-30, 0 users. | 2026-10-06 |
+| `binarcode-google-ads-mcp-http` | <https://github.com/BinarCode/google-ads-mcp-http> | Verdict 'no'; only 2 own commits, abandoned since 2026-01-26, 0 users. | 2026-10-06 |
+| `brandonmiller18-google-ads-mcp` | <https://github.com/BrandonMiller18/google-ads-mcp> | Verdict 'no'; GoMarble copy with 4 own commits, abandoned since 2026-07-27, 0 users. | 2026-10-06 |
+| `codyp10-google-ads-mcp` | <https://github.com/Codyp10/Google-Ads-MCP> | Verdict 'no'; stale fork, abandoned since 2026-05-11, 0 users. | 2026-10-06 |
+| `cohnen-mcp-google-ads` | <https://github.com/cohnen/mcp-google-ads> | Verdict 'no'; original single-file engine abandoned since 2025-10-16, hardcoded to sunsetted API v19. | 2026-10-06 |
+| `connorcallison-google-ads-mcp` | <https://github.com/ConnorCallison/google-ads-mcp> | Burst-then-quiet; 11 commits, last commit 2026-07-23, missing LICENSE file, 0 users. | 2026-10-06 |
+| `connorstearns-mcp-google-ads` | <https://github.com/connorstearns/mcp-google-ads> | Verdict 'no'; abandoned since 2026-06-03, 0 users, unmaintained. | 2026-10-06 |
+| `cristiandrei1234-google-ads-mcp` | <https://github.com/cristiandrei1234/google-ads-mcp> | Burst-then-quiet; 30 commits, last commit 2026-08-19, restrictive non-commercial license, 0 users. | 2026-10-06 |
+| `dhawalshah-google-ads-mcp` | <https://github.com/dhawalshah/google-ads-mcp> | Burst-then-quiet; 24 commits, last commit 2026-09-22, dead Cohnen clone, 0 external users. | 2026-10-06 |
+| `epave-google-ads-mcp` | <https://github.com/epave/google-ads-mcp> | Too-new-to-judge; 48 commits in 9 days in Sep 2026 generated by Cursor AI agent, experimental duckdb dev dependency, 0 external users. | 2026-10-06 |
+| `gomarble-ai-google-ads-mcp-server` | <https://github.com/gomarble-ai/google-ads-mcp-server> | Burst-then-quiet; only 2 commits in last 12 months, stagnant vendor repo since 2026-08-05. | 2026-10-06 |
+| `grantweston-google-ads-mcp-complete` | <https://github.com/grantweston/google-ads-mcp-complete> | Verdict 'no'; abandoned since 2025-09-02, hardcoded to API v21. | 2026-10-06 |
+| `huzaifa-hb-google-ads-mcp` | <https://github.com/huzaifa-hb/Google-Ads-MCP> | Burst-then-quiet; 63 commits in 7 days, stagnant since 2026-06-11, 0 users, npm 404 Not Found. | 2026-10-06 |
+| `iflow-mcp-itallstartedwithaidea-google-ads-mcp` | <https://github.com/iflow-mcp/itallstartedwithaidea-google-ads-mcp> | Classified Abandoned; automated mirror bot repo with 0 own commits, last pushed 2026-04-12. | 2026-10-06 |
+| `itallstartedwithaidea-google-ads-mcp` | <https://github.com/itallstartedwithaidea/google-ads-mcp> | Verdict 'no'; educational clone, last commit 2026-05-04, 0 external users. | 2026-10-06 |
+| `johnoconnor0-google-ads-mcp` | <https://github.com/johnoconnor0/google-ads-mcp> | Verdict 'no'; 23 of 31 commits are automated bot bumps, stagnant since 2026-09-28. | 2026-10-06 |
+| `kiarashedraki-google-ads-mcp` | <https://github.com/kiarashedraki/google-ads-mcp> | Too-new-to-judge; 2 commits in Sep 2026, no tests, unverified live mutations, 36 downloads. | 2026-10-06 |
+| `konradbachowski-google-ads-mcp` | <https://github.com/konradbachowski/google-ads-mcp> | Verdict 'no'; 6 commits, abandoned since 2026-06-22, 0 users. | 2026-10-06 |
+| `lazare-42-google-ads-mcp` | <https://github.com/Lazare-42/google-ads-mcp> | Too-new-to-judge; 5 commits in Aug–Sep 2026, missing LICENSE file, service-account only, 0 users. | 2026-10-06 |
+| `locomotive-agency-google-ads-mcp` | <https://github.com/locomotive-agency/google-ads-mcp> | Verdict 'no'; 14 commits, last commit 2026-08-07, minimal wrapper with weak usage. | 2026-10-06 |
+| `lucassantana-dev-google-ads-mcp` | <https://github.com/LucasSantana-Dev/google-ads-mcp> | Burst-then-quiet; 8 commits, last commit 2026-07-01, missing LICENSE file, 0 users. | 2026-10-06 |
+| `mailmanar-google-ads-mcp` | <https://github.com/mailmanar/google-ads-mcp> | Verdict 'no'; 1 own commit of 66, abandoned since 2026-05-26, 0 users. | 2026-10-06 |
+| `matheusslg-google-ads-mcp` | <https://github.com/matheusslg/google-ads-mcp> | Burst-then-quiet; 57 commits in June, stagnant since 2026-07-06, 0 users. | 2026-10-06 |
+| `minholi-google-ads-mcp` | <https://github.com/minholi/google-ads-mcp> | Burst-then-quiet; 44 commits in April, stagnant since 2026-09-10, 0 users. | 2026-10-06 |
+| `monsieurgoodmood-google-ads-mcp-plus` | <https://github.com/monsieurgoodmood/google-ads-mcp-plus> | Verdict 'no'; 10 commits, abandoned since 2026-07-30, 0 users. | 2026-10-06 |
+| `noordevtech-googleads-mcp` | <https://github.com/noordevtech/GoogleAds-mcp> | Verdict 'no'; 20 of 23 commits generated by Claude in a single day, abandoned since 2026-05-07. | 2026-10-06 |
+| `promobase-google-ads-mcp` | <https://github.com/promobase/google-ads-mcp> | Classified Abandoned; unmaintained upstream Promobase codebase, last commit 2026-04-28. | 2026-10-06 |
+| `saifshabsug-google-ads-mcp-pro` | <https://github.com/saifshabsug/google-ads-mcp-pro> | Classified Abandoned; last commit 2026-07-29, 0 users, validate_only defaults to False safety hazard. | 2026-10-06 |
+| `shivpanks19-mcp-google-ads` | <https://github.com/shivpanks19/mcp-google-ads> | Too-new-to-judge; derivative of dead Cohnen archetype, severe 87-tool bloat, requires Supabase+Sheets, unpublished. | 2026-10-06 |
+| `thainajardim-google-ads-mcp` | <https://github.com/ThainaJardim/google-ads-mcp> | Verdict 'no'; 2 commits, abandoned since 2026-04-09, 0 users. | 2026-10-06 |
+| `trueclicks-google-ads-mcp-js` | <https://github.com/TrueClicks/google-ads-mcp-js> | Verdict 'no'; repository officially archived 2026-01-07, 0 releases in 2026. | 2026-10-06 |
+| `videngrowth-public-google-ads-mcp` | <https://github.com/VidenGrowth/public-google-ads-mcp> | Classified Abandoned; 3 total commits, abandoned since 2026-06-30, 0 users. | 2026-10-06 |
+| `x777-mcp-google-ads` | <https://github.com/x777/mcp-google-ads> | Verdict 'no'; 2 commits, abandoned since 2026-05-14, dead Cohnen clone. | 2026-10-06 |
+| `yeswanthreddyk-google-ads-mcp` | <https://github.com/yeswanthreddyk/Google-ads-MCP> | Classified Abandoned; 2 commits, abandoned since 2026-06-27, 0 users. | 2026-10-06 |
+| `zelentsov-dev-google-ads-mcp` | <https://github.com/zelentsov-dev/google-ads-mcp> | Too-new-to-judge; 4 commits in 3 days in Aug 2026, 0 users, stdio only. | 2026-10-06 |
