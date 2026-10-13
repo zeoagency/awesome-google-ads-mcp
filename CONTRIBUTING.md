@@ -1,48 +1,41 @@
-# Contributing to Awesome Google Ads MCP
+# Contributing
 
-Thank you for contributing to **Awesome Google Ads MCP**! This repository is a strictly curated, developer-focused index and technical comparison of Model Context Protocol (MCP) servers and agent-facing tooling for the **Google Ads API**.
+Suggest a Google Ads MCP server, command-line tool, or SDK with a link to its canonical public repository and evidence for the description.
 
-To maintain institutional engineering quality and prevent directory bloat, all submissions must satisfy our **15 Inclusion Criteria**.
+## Inclusion rules
 
----
+- Provide an implemented MCP interface, executable CLI, or reusable client library that calls the Google Ads API.
+- Document installation, authentication, and at least one Google Ads usage example. Source inspection must confirm the advertised interface and API calls.
+- Support a Google Ads API version that Google still supports. Check the [official sunset schedule](https://developers.google.com/google-ads/api/docs/sunset-dates); an old version number alone does not establish that an API is retired.
+- Include multi-platform tools only when their Google Ads implementation is distinct and verifiable. Describe only that implementation here.
+- Link to the canonical upstream project. Include an independent fork only if its Google Ads functionality materially differs and is maintained separately.
+- Label libraries maintained by Google as official only when supported by [Google's client library documentation](https://developers.google.com/google-ads/api/docs/client-libs).
 
-## Inclusion Criteria Checklist
+Exclude archived repositories, empty scaffolds, README-only connectors, prompt or skill collections, standalone tutorials, and legacy AdWords API tools. AdSense, Google Ad Manager, Analytics-only tools, and generic MCP or cloud utilities are outside this catalog's scope.
 
-Before submitting a Pull Request, verify that your project satisfies every applicable requirement:
+Stars, commit counts, repository age, and time since the last commit do not establish functionality or quality. Inspect the implementation rather than treating these figures as acceptance gates.
 
-1. **Protocol Compliance:** Must implement the Model Context Protocol (MCP) specification (JSON-RPC 2.0 over `stdio`, `sse`, or `streamable-http`) OR provide a dedicated, executable agentic tool wrapper for Google Ads.
-2. **Current API Surface:** Must interface with the current **Google Ads API** (REST v17+ or gRPC). Tools interfacing exclusively with the sunset AdWords API are quarantined in `docs/EXCLUSIONS.md`.
-3. **Strict Domain Boundary:** Scope is exclusively Google Ads (Search, Display, Shopping, Performance Max, Video, App, Demand Gen, Local). Generic paid-media directories or cross-channel ad tools qualify only if they provide cleanly separable, first-class Google Ads API toolsets.
-4. **Code Evidence Required:** Must point to a repository with functional, executable code. Repositories containing only a README, boilerplate without logic, or placeholder commits are rejected.
-5. **Canonical Repository:** In case of forks or clones, only the canonical upstream repository or actively maintained independent forks are accepted.
-6. **Verifiable Write Safety:** Any tool claiming write capabilities (campaign creation, budget updates, bid adjustments, offline conversion uploads) must demonstrate working mutate endpoints with safety guardrails (such as `validate_only` dry-runs).
-7. **Explicit Campaign Types:** Must document which campaign types are actually supported (e.g. Search-only vs Performance Max/Shopping).
-8. **Auth Model Transparency:** Must document required authentication flows (OAuth2 Desktop/Web, Service Account impersonation, Refresh Token daemon, Developer Token tier).
-9. **MCC Multi-Account Support:** Must explicitly declare whether it supports Manager Accounts (MCC) via `login-customer-id` header injection.
-10. **Clean Subprocess Handling:** Stdio subprocess wrappers must properly isolate I/O buffers (e.g., handling Windows pipe deadlocks via `stdin=subprocess.DEVNULL`).
-11. **Local Caching Protocols:** Meta-MCP tools ingesting data into SQLite must implement clean cache synchronization without unbounded data drift.
-12. **MCP Apps Verification:** Tools claiming UI rendering must implement `@modelcontextprotocol/ext-apps` sandboxed view protocols.
-13. **Active Maintenance:** Archived or abandoned repositories are labeled as `[Archived]` and included only if they demonstrate historical architectural reference value.
-14. **Public Source Access:** Closed-source commercial products qualify only if an open client connector or MCP wrapper repository is publicly accessible.
-15. **Plain-English Description:** Submissions must include a concise description ($\le 3$ sentences) highlighting exact technical differentiation, supported API resources, and target developer persona.
+## Descriptions and evidence
 
----
+Write one or two concise English sentences explaining the Google Ads functionality. Verify read and write operations, transports, caching, and safety features separately. A generic query endpoint does not establish full campaign management; previews and confirmation prompts do not establish API `validate_only` support.
 
-## Submission Workflow
+Use repository documentation and source files to support claims. Include the evidence links in the pull request description, with the date checked. State whether verification used source inspection, local execution, or an authenticated Google Ads account. Avoid unmeasured performance claims, rankings, and guarantees of production readiness.
 
-1. Fork the repository.
-2. Add your project to the appropriate subcategory table in `README.md` following the exact format:
+## Submit a change
+
+1. Add or update the appropriate table in `README.md`:
 
    ```markdown
-   | <a id="owner-repo"></a>[**owner/repo**](https://github.com/owner/repo) | Concise factual description of what it actually does. |
+   | <a id="owner-repo"></a>[**owner/repo**](https://github.com/owner/repo) | Executes documented Google Ads operations through its verified interface. |
    ```
 
-3. Update the Developer Comparison Matrix with verified technical capabilities.
-4. Ensure all category counts and subcategory counts in `## Contents` and section headers remain mathematically consistent.
-5. Run the markdown linter:
+2. Update the comparison matrix for MCP servers, section counts, and navigation links as applicable.
+3. Check the repository links and the internal anchors.
+4. Run the checks used before committing:
 
    ```bash
-   npx markdownlint-cli2 "**/*.md"
+   npx --yes markdownlint-cli2@latest "**/*.md"
+   git diff --check
    ```
 
-6. Submit your Pull Request. All CI checks must pass.
+5. Open a pull request explaining the change and linking to the evidence.
