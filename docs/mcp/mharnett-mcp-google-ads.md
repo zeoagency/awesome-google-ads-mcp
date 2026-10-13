@@ -1,0 +1,3956 @@
+# mharnett/mcp-google-ads tools
+
+[Main list](../../README.md) · [Search every tool](../TOOLS.md) · [Upstream](https://github.com/mharnett/mcp-google-ads)
+
+**Inventory:** 76 tools. **Default tools/list:** 21. **Checked:** 2026-10-13.
+
+**Source:** [commit 9773a7f](https://github.com/mharnett/mcp-google-ads/tree/9773a7f77de460b87e5b9ace47334616dae22bfa). Built locked source; stdio initialize + tools/list in default and write-enabled modes; empty client config and network blocker.
+
+Ordinary default clients see 21 tools. Setting `GOOGLE_ADS_MCP_WRITE=true` exposes another 55, for 76 total; this page includes both modes. Writes have individual confirmation, preview, and validation behavior rather than one uniform dry-run contract. The generic dispatcher does not enforce the advertised JSON Schema itself.
+
+Descriptions and parameter JSON below preserve the registered MCP interface. Open each parameter block for required fields, defaults, enums, nested objects, and references. Prose-only restrictions and free-form objects remain as upstream declares them. No tool was invoked and no live account operation was tested.
+
+## Tools
+
+- [Accounts, queries, and performance (7)](#accounts-queries-and-performance)
+- [Keyword research and search terms (17)](#keyword-research-and-search-terms)
+- [Campaigns, budgets, bidding, and targeting (15)](#campaigns-budgets-bidding-and-targeting)
+- [Ads and creative assets (20)](#ads-and-creative-assets)
+- [Audiences and audience insights (2)](#audiences-and-audience-insights)
+- [Conversions and measurement (6)](#conversions-and-measurement)
+- [Experiments and recommendations (7)](#experiments-and-recommendations)
+- [Previews, validation, and local helpers (2)](#previews-validation-and-local-helpers)
+
+## Accounts, queries, and performance
+
+<a id="tool-google-ads-ad-performance"></a>
+
+### `google_ads_ad_performance`
+
+Get ad performance report with metrics, ad copy (headlines/descriptions), final URLs, and ad strength rating. Includes paused and removed ads that had activity in the date range (status column labels them) — historical metrics are never filtered by current status.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric string campaign IDs"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L687)
+
+<a id="tool-google-ads-gaql-query"></a>
+
+### `google_ads_gaql_query`
+
+Execute a raw GAQL (Google Ads Query Language) query. Use this for custom reports or accessing any Google Ads API resource not covered by other tools. See <https://developers.google.com/google-ads/api/docs/query/overview> for GAQL syntax.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "query": {
+      "type": "string",
+      "description": "The GAQL query to execute"
+    }
+  },
+  "required": [
+    "query"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L917)
+
+<a id="tool-google-ads-get-campaign-diagnostics"></a>
+
+### `google_ads_get_campaign_diagnostics`
+
+Diagnose why a campaign is not spending or serving. Returns primary_status, primary_status_reasons, serving_status, budget, bidding strategy, and last-7-days metrics in a single call. Use this as the first step when a campaign has unexpectedly low spend or impressions. Includes paused and removed campaigns that had activity in the date range (status column labels them) — historical metrics are never filtered by current status.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "One or more numeric campaign IDs to diagnose. If omitted, returns diagnostics for all enabled campaigns."
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L880)
+
+<a id="tool-google-ads-get-client-context"></a>
+
+### `google_ads_get_client_context`
+
+Get the current client context and health status based on working directory. Call this first to confirm which Google Ads account you're working with.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "working_directory": {
+      "type": "string",
+      "description": "The current working directory"
+    }
+  },
+  "required": [
+    "working_directory"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L5)
+
+<a id="tool-google-ads-list-ad-groups"></a>
+
+### `google_ads_list_ad_groups`
+
+List ad groups, optionally filtered by campaign
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string"
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L34)
+
+<a id="tool-google-ads-list-campaigns"></a>
+
+### `google_ads_list_campaigns`
+
+List all campaigns for the current client account
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "description": "The customer ID (will use context if not provided)"
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L20)
+
+<a id="tool-google-ads-remove-items"></a>
+
+### `google_ads_remove_items`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+**Behavior:** Defaults to a preview until explicitly confirmed, then labels and removes resources in child-before-parent order. Its handler also accepts JSON-encoded ID arrays and string confirmation values beyond the advertised schema.
+
+Remove campaigns, ad groups, or ads permanently. IRREVERSIBLE at the API level (reports on removed resources still work). DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to get a preview; pass `confirm: true` to actually remove. Labels are applied BEFORE removal so the audit trail survives. Removals run in child-up order (ads → ad_groups → campaigns) so parent removes don't fail on enabled children. Auto-applies today's `Claude-MM-DD-YY` label.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually remove. Omit or false for dry-run preview."
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional custom labels to apply BEFORE removal (label-first ordering keeps the audit trail intact). Labels are created if they don't exist."
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L314)
+
+## Keyword research and search terms
+
+<a id="tool-google-ads-add-adgroup-negatives"></a>
+
+### `google_ads_add_adgroup_negatives`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Add negative keywords at the ad-group level. Use when only one ad group in a campaign should exclude the term — other ad groups in the same campaign can still match it. For campaign-wide exclusion use google_ads_add_campaign_negatives instead.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "match_type": {
+            "type": "string",
+            "enum": [
+              "BROAD",
+              "PHRASE",
+              "EXACT"
+            ]
+          }
+        },
+        "required": [
+          "text",
+          "match_type"
+        ]
+      }
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "keywords"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L515)
+
+<a id="tool-google-ads-add-campaign-negatives"></a>
+
+### `google_ads_add_campaign_negatives`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Add negative keywords at the campaign level. Use for campaign-specific negatives that shouldn't be in a shared list.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "match_type": {
+            "type": "string",
+            "enum": [
+              "BROAD",
+              "PHRASE",
+              "EXACT"
+            ]
+          }
+        },
+        "required": [
+          "text",
+          "match_type"
+        ]
+      }
+    }
+  },
+  "required": [
+    "campaign_id",
+    "keywords"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L474)
+
+<a id="tool-google-ads-add-shared-negatives"></a>
+
+### `google_ads_add_shared_negatives`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Add negative keywords to a shared negative keyword list. Keywords will immediately block matching queries across all campaigns the list is applied to.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "shared_set_id": {
+      "type": "string",
+      "description": "The shared set ID to add keywords to"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "match_type": {
+            "type": "string",
+            "enum": [
+              "BROAD",
+              "PHRASE",
+              "EXACT"
+            ]
+          }
+        },
+        "required": [
+          "text",
+          "match_type"
+        ]
+      }
+    }
+  },
+  "required": [
+    "shared_set_id",
+    "keywords"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L397)
+
+<a id="tool-google-ads-create-keywords"></a>
+
+### `google_ads_create_keywords`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create keywords for an ad group (will be PAUSED until approved). Keywords are auto-labeled for easy discovery via google_ads_list_pending_changes.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "match_type": {
+            "type": "string",
+            "enum": [
+              "BROAD",
+              "PHRASE",
+              "EXACT"
+            ]
+          }
+        },
+        "required": [
+          "text",
+          "match_type"
+        ]
+      }
+    },
+    "label": {
+      "type": "string",
+      "description": "Label to apply to created keywords (default: 'claude-pending'). Use to group and find paused keywords later."
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "keywords"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L248)
+
+<a id="tool-google-ads-create-shared-set"></a>
+
+### `google_ads_create_shared_set`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a new shared negative keyword list at account level. Returns the new shared set ID.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name for the new shared negative keyword list"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L356)
+
+<a id="tool-google-ads-enable-keywords"></a>
+
+### `google_ads_enable_keywords`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Enable paused keywords by their criterion resource names. REQUIRES USER APPROVAL. Use after reviewing in Google Ads UI. Auto-applies today's `Claude-MM-DD-YY` label; pass `labels` to attach additional custom labels so different enable operations stay distinguishable.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "criterion_resource_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full resource names like customers/123/adGroupCriteria/456~789"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional custom labels to apply to every enabled keyword (in addition to the auto-applied `Claude-MM-DD-YY` label). Labels are created if they don't exist."
+    }
+  },
+  "required": [
+    "criterion_resource_names"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L569)
+
+<a id="tool-google-ads-keyword-performance"></a>
+
+### `google_ads_keyword_performance`
+
+Get keyword performance report with metrics including impressions, clicks, cost, conversions, quality score components (quality score, expected CTR, ad relevance, landing page experience), and impression share metrics. Includes paused and removed keywords that had activity in the date range (status column labels them) — historical metrics are never filtered by current status.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "keyword_text_contains": {
+      "type": "string",
+      "description": "Filter keywords containing this text"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric string campaign IDs"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L617)
+
+<a id="tool-google-ads-keyword-volume"></a>
+
+### `google_ads_keyword_volume`
+
+Get historical search volume estimates for a list of keywords using the Google Ads Keyword Planner. Returns avg monthly searches, competition level, and CPC bid range for each keyword.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "description": "The Google Ads customer ID"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of keywords to get volume estimates for (max 20 per call)"
+    },
+    "geo_target_constants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Geo target resource names, e.g. ['geoTargetConstants/2840'] for US. Defaults to US if omitted."
+    },
+    "language": {
+      "type": "string",
+      "description": "Language resource name, e.g. 'languageConstants/1000' for English. Defaults to English if omitted."
+    }
+  },
+  "required": [
+    "keywords"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1033)
+
+<a id="tool-google-ads-link-shared-set"></a>
+
+### `google_ads_link_shared_set`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Link a shared negative keyword list to one or more campaigns. Once linked, all negatives in the list will apply to those campaigns.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "shared_set_id": {
+      "type": "string",
+      "description": "The shared set ID to link"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric string campaign IDs to link the shared set to"
+    }
+  },
+  "required": [
+    "shared_set_id",
+    "campaign_ids"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L369)
+
+<a id="tool-google-ads-pause-keywords"></a>
+
+### `google_ads_pause_keywords`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Pause active keywords by their criterion resource names.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "criterion_resource_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full resource names like customers/123/adGroupCriteria/456~789"
+    }
+  },
+  "required": [
+    "criterion_resource_names"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L556)
+
+<a id="tool-google-ads-remove-adgroup-negatives"></a>
+
+### `google_ads_remove_adgroup_negatives`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Remove ad-group-level negative keywords by their resource names. Get resource names from a GAQL query on ad_group_criterion.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "resource_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Resource names of the ad group criteria to remove (e.g. customers/1234/adGroupCriteria/5678~9012)"
+    }
+  },
+  "required": [
+    "resource_names"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L539)
+
+<a id="tool-google-ads-remove-campaign-negatives"></a>
+
+### `google_ads_remove_campaign_negatives`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Remove campaign-level negative keywords by their resource names. Get resource names from a GAQL query on campaign_criterion.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "resource_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Resource names of the campaign criteria to remove (e.g. customers/1234/campaignCriteria/5678~9012)"
+    }
+  },
+  "required": [
+    "resource_names"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L498)
+
+<a id="tool-google-ads-remove-shared-negatives"></a>
+
+### `google_ads_remove_shared_negatives`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Remove negative keywords from a shared negative keyword list by their resource names. Get resource names from a GAQL query on shared_criterion.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "resource_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Resource names of the shared criteria to remove (e.g. customers/1234/sharedCriteria/5678~9012)"
+    }
+  },
+  "required": [
+    "resource_names"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L421)
+
+<a id="tool-google-ads-search-term-insight-terms"></a>
+
+### `google_ads_search_term_insight_terms`
+
+Drill into a specific search term category to see the individual search terms within it. Requires an insight_id from google_ads_search_term_insights.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID"
+    },
+    "insight_id": {
+      "type": "string",
+      "description": "The insight category ID from google_ads_search_term_insights results"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "insight_id",
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L747)
+
+<a id="tool-google-ads-search-term-insights"></a>
+
+### `google_ads_search_term_insights`
+
+Get search term category insights for a campaign. Shows the search categories your ads appeared against (like the Insights panel in the Google Ads UI). Must query one campaign at a time. Optionally compares two date ranges to show trends.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to get insights for (required, one campaign at a time)"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "compare_start_date": {
+      "type": "string",
+      "description": "Comparison period start date (optional, for trend calculation)"
+    },
+    "compare_end_date": {
+      "type": "string",
+      "description": "Comparison period end date (optional, for trend calculation)"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L730)
+
+<a id="tool-google-ads-search-term-report"></a>
+
+### `google_ads_search_term_report`
+
+Get search term report showing actual search queries that triggered ads, with the keyword they matched to.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "keyword_text_contains": {
+      "type": "string",
+      "description": "Filter by keyword text"
+    },
+    "search_term_contains": {
+      "type": "string",
+      "description": "Filter search terms containing this text"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric string campaign IDs"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L651)
+
+<a id="tool-google-ads-unlink-shared-set"></a>
+
+### `google_ads_unlink_shared_set`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Unlink a shared negative keyword list from one or more campaigns. The list's negatives will no longer apply to those campaigns.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "shared_set_id": {
+      "type": "string",
+      "description": "The shared set ID to unlink"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric string campaign IDs to unlink the shared set from"
+    }
+  },
+  "required": [
+    "shared_set_id",
+    "campaign_ids"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L383)
+
+## Campaigns, budgets, bidding, and targeting
+
+<a id="tool-google-ads-apply-label"></a>
+
+### `google_ads_apply_label`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Attach a label to existing campaigns, ad groups, or ads without changing their status. Label is created if it doesn't exist. Useful for tagging items for audit trails or bulk ops.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "description": "Label name. Created if it doesn't exist."
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "label"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L337)
+
+<a id="tool-google-ads-create-ad-group"></a>
+
+### `google_ads_create_ad_group`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a new ad group (will be PAUSED until approved). Returns ad group ID. type defaults to SEARCH_STANDARD for back-compat; use DEMAND_GEN_MULTI_ASSET_AD_GROUP for Demand Gen campaigns.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "cpc_bid": {
+      "type": "number",
+      "description": "CPC bid in dollars"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "SEARCH_STANDARD",
+        "DEMAND_GEN_MULTI_ASSET_AD_GROUP"
+      ],
+      "description": "Ad group type. Defaults to SEARCH_STANDARD. Use DEMAND_GEN_MULTI_ASSET_AD_GROUP for Demand Gen campaigns."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L161)
+
+<a id="tool-google-ads-create-campaign"></a>
+
+### `google_ads_create_campaign`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a new campaign (will be PAUSED until approved). Defaults: channel_type=SEARCH, bidding_strategy=MANUAL_CPC (SEARCH) or MAXIMIZE_CONVERSIONS (DEMAND_GEN), language_id=1000 (English). For DEMAND_GEN provide geo_target_ids (Google Ads geo target constant IDs, e.g. '21134' for Alaska). TARGET_CPA requires target_cpa (dollars). MAXIMIZE_CLICKS may take target_cpc_cap (dollars). start_date/end_date are YYYY-MM-DD.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "daily_budget": {
+      "type": "number",
+      "description": "Daily budget in dollars"
+    },
+    "channel_type": {
+      "type": "string",
+      "enum": [
+        "SEARCH",
+        "DEMAND_GEN"
+      ],
+      "description": "Advertising channel type. Defaults to SEARCH."
+    },
+    "bidding_strategy": {
+      "type": "string",
+      "enum": [
+        "MANUAL_CPC",
+        "MAXIMIZE_CLICKS",
+        "MAXIMIZE_CONVERSIONS",
+        "TARGET_CPA"
+      ],
+      "description": "Bidding strategy. Defaults to MANUAL_CPC for SEARCH, MAXIMIZE_CONVERSIONS for DEMAND_GEN."
+    },
+    "target_cpa": {
+      "type": "number",
+      "description": "Target CPA in dollars (required if bidding_strategy=TARGET_CPA)."
+    },
+    "target_cpc_cap": {
+      "type": "number",
+      "description": "Optional CPC ceiling in dollars for MAXIMIZE_CLICKS strategy."
+    },
+    "geo_target_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Google Ads geo target constant IDs (e.g. '21134' = Alaska, '21141' = Maine)."
+    },
+    "language_id": {
+      "type": "string",
+      "description": "Language constant ID. Defaults to '1000' (English)."
+    },
+    "start_date": {
+      "type": "string",
+      "description": "YYYY-MM-DD start date (optional)."
+    },
+    "end_date": {
+      "type": "string",
+      "description": "YYYY-MM-DD end date (optional)."
+    }
+  },
+  "required": [
+    "name",
+    "daily_budget"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L112)
+
+<a id="tool-google-ads-detach-portfolio-bid-strategy"></a>
+
+### `google_ads_detach_portfolio_bid_strategy`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Detach a campaign from its portfolio (cross-campaign) bid strategy, dropping it to campaign-level Maximize Conversions with no target. This is the ONLY sanctioned way to break a portfolio bid-strategy attachment — google_ads_update_campaign_bidding and google_ads_update_campaign_budget (create_new_budget) both refuse to do this silently and point here instead. IRREVERSIBLE: re-attaching or re-applying tCPA/tROAS targets afterward is a separate manual step. Requires confirm: true.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to detach from its portfolio strategy."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. This is irreversible and the only way to break a portfolio bid-strategy attachment."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "confirm"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L817)
+
+<a id="tool-google-ads-enable-items"></a>
+
+### `google_ads_enable_items`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Enable paused campaigns, ad groups, or ads. REQUIRES USER APPROVAL. Use after reviewing in Google Ads UI. Auto-applies today's `Claude-MM-DD-YY` label; pass `labels` to attach additional custom labels so different enable operations stay distinguishable.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional custom labels to apply to every enabled item (in addition to the auto-applied `Claude-MM-DD-YY` label). Labels are created if they don't exist."
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L276)
+
+<a id="tool-google-ads-pause-items"></a>
+
+### `google_ads_pause_items`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Pause enabled campaigns, ad groups, or ads. REQUIRES USER APPROVAL. This will stop items from serving. Auto-applies today's `Claude-MM-DD-YY` label; pass `labels` to attach additional custom labels so different pause operations stay distinguishable (e.g. `fix-landing-page-redirect`).
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional custom labels to apply to every paused item (in addition to the auto-applied `Claude-MM-DD-YY` label). Labels are created if they don't exist."
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L295)
+
+<a id="tool-google-ads-rename-ad-group"></a>
+
+### `google_ads_rename_ad_group`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Rename an ad group. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview the change.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string",
+      "description": "Numeric ID of the ad group to rename."
+    },
+    "new_name": {
+      "type": "string",
+      "description": "New ad group name."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply the rename. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "new_name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1577)
+
+<a id="tool-google-ads-rename-campaign"></a>
+
+### `google_ads_rename_campaign`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Rename a campaign. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview the change. Note: renaming a campaign does NOT update its url_custom_parameters (utmcampaign value carries the literal old name). Pair with google_ads_update_campaign_tracking to sync.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Numeric ID of the campaign to rename."
+    },
+    "new_name": {
+      "type": "string",
+      "description": "New campaign name."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply the rename. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "new_name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1595)
+
+<a id="tool-google-ads-set-ad-group-location-targeting"></a>
+
+### `google_ads_set_ad_group_location_targeting`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Add location (geo) targeting criteria at the ad group level. Required for Demand Gen campaigns — Demand Gen sets location at ad group level, not campaign level. Pass numeric geo target IDs (e.g. '2840' for USA). Existing criteria are NOT removed.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string"
+    },
+    "geo_target_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric geo target constant IDs, e.g. ['2840', '2124'] for USA + Canada."
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "geo_target_ids"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L438)
+
+<a id="tool-google-ads-set-campaign-location-targeting"></a>
+
+### `google_ads_set_campaign_location_targeting`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Add location (geo) targeting criteria to an existing campaign. Mirrors the geo_target_ids parameter available at campaign creation. Pass the numeric geo target IDs (e.g. '2840' for USA, '2124' for Canada). Existing location criteria are NOT removed — call GAQL to check first if needed.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string"
+    },
+    "geo_target_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric geo target constant IDs, e.g. ['2840', '2124'] for USA + Canada."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "geo_target_ids"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L456)
+
+<a id="tool-google-ads-update-campaign-ad-rotation"></a>
+
+### `google_ads_update_campaign_ad_rotation`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Set a campaign's ad rotation (ad_serving_optimization_status) — the setting behind the UI's Settings > Ad rotation. Affects EVERY ad group in the campaign, not just one. ROTATE ("Rotate evenly") self-reverts to OPTIMIZE ("Optimize: Prefer best performing ads") after ~90 days — Google-managed, no follow-up needed. ROTATE_INDEFINITELY does NOT auto-revert and needs a manual revert or reminder. No default mode is applied — you must pass one explicitly, so ROTATE_INDEFINITELY can never be set by omission. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Numeric ID of the campaign to update."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "OPTIMIZE",
+        "CONVERSION_OPTIMIZE",
+        "ROTATE",
+        "ROTATE_INDEFINITELY"
+      ],
+      "description": "OPTIMIZE = prefer best-performing ads (Google default). CONVERSION_OPTIMIZE = prefer ads likely to convert (requires conversion tracking). ROTATE = rotate evenly, auto-reverts to OPTIMIZE after ~90 days. ROTATE_INDEFINITELY = rotate evenly forever, no auto-revert."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "mode"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1768)
+
+<a id="tool-google-ads-update-campaign-bidding"></a>
+
+### `google_ads_update_campaign_bidding`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Update a campaign's bidding strategy and/or target CPA / target ROAS. If `strategy` is omitted the current strategy is preserved and only the target values are updated (useful for adding a tCPA to an existing Max Conversions campaign). Dollar amounts are in dollars (converted to micros internally). target_roas is a decimal (e.g., 3.0 = 300%). BLOCKS by default if the change implies a >20% target delta from the campaign's current value, or removes an existing target / switches off a target-based strategy entirely (a 'loosening' change with no percentage to measure) — pass confirm_large_change: true to override after reviewing the specific numbers.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to update"
+    },
+    "strategy": {
+      "type": "string",
+      "enum": [
+        "MAXIMIZE_CONVERSIONS",
+        "MAXIMIZE_CONVERSION_VALUE",
+        "TARGET_CPA",
+        "TARGET_ROAS",
+        "MANUAL_CPC",
+        "MAXIMIZE_CLICKS"
+      ],
+      "description": "Optional. New bidding strategy. If omitted, keeps current strategy and only updates target values."
+    },
+    "target_cpa_dollars": {
+      "type": "number",
+      "description": "Target CPA in dollars. Applies to MAXIMIZE_CONVERSIONS (optional ceiling) or TARGET_CPA (required)."
+    },
+    "target_roas": {
+      "type": "number",
+      "description": "Target ROAS as decimal (3.0 = 300%). Applies to MAXIMIZE_CONVERSION_VALUE or TARGET_ROAS."
+    },
+    "confirm_large_change": {
+      "type": "boolean",
+      "description": "Required to be true to proceed when the change exceeds the 20% magnitude ceiling or removes an existing target/target-based strategy entirely. Omit or false to get a blocking error describing the exact delta first."
+    }
+  },
+  "required": [
+    "campaign_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L778)
+
+<a id="tool-google-ads-update-campaign-budget"></a>
+
+### `google_ads_update_campaign_budget`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Update the daily budget for a campaign. Can update the existing budget amount or create a new solo budget and reassign the campaign to it (useful for breaking shared budgets).
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to update"
+    },
+    "daily_budget": {
+      "type": "number",
+      "description": "New daily budget in dollars"
+    },
+    "create_new_budget": {
+      "type": "boolean",
+      "description": "If true, creates a new budget and reassigns this campaign to it (breaks shared budgets). If false, updates the existing budget amount in place (affects all campaigns sharing it)."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "daily_budget"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L763)
+
+<a id="tool-google-ads-update-campaign-geo-target-type"></a>
+
+### `google_ads_update_campaign_geo_target_type`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Set one or more campaigns' positive geo target type (geo_target_type_setting.positive_geo_target_type) — the setting behind the UI's Locations > Location options > "Presence" vs "Presence or interest". PRESENCE targets people physically in or regularly in the location; PRESENCE_OR_INTEREST also serves people searching about the location from elsewhere. Only these two modes are accepted here. Applies the same mode to every campaign_id passed in the same call. If `label` is passed, it is applied to every one of those campaigns as part of the same call. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Numeric ID of a campaign to update."
+      },
+      "description": "Campaign IDs to apply the same positive geo target type to."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "PRESENCE",
+        "PRESENCE_OR_INTEREST"
+      ],
+      "description": "PRESENCE = only people physically in / regularly in the targeted locations. PRESENCE_OR_INTEREST = also people who searched about the targeted locations from elsewhere."
+    },
+    "label": {
+      "type": "string",
+      "description": "Optional label name to apply to every campaign in campaign_ids as part of this call. Created if it doesn't already exist."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "campaign_ids",
+    "mode"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1790)
+
+<a id="tool-google-ads-update-campaign-selective-optimization"></a>
+
+### `google_ads_update_campaign_selective_optimization`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Set a campaign's Selective Optimization conversion actions — the subset of conversion actions a Maximize Conversions / Maximize Conversion Value campaign optimizes bidding toward. FULL-ARRAY REPLACE, not additive: the conversion_action_ids list you pass entirely replaces whatever conversion actions are currently set, it does not merge with them. Pass every conversion action ID you want active, not just the ones to add.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to update"
+    },
+    "conversion_action_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Numeric string conversion action ID"
+      },
+      "description": "Full replacement list of conversion action IDs for selective optimization. This REPLACES the existing set entirely — it is not additive."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "conversion_action_ids"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L799)
+
+## Ads and creative assets
+
+<a id="tool-google-ads-create-callout"></a>
+
+### `google_ads_create_callout`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a new CALLOUT Asset (short promotional snippet, max 25 chars, e.g. "Free Shipping"). Callouts are shared and must be linked separately -- use google_ads_link_asset_to_campaign (campaign-level) or google_ads_link_asset_to_customer (account-level) after creation. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "callout_text": {
+      "type": "string",
+      "description": "Callout text (max 25 chars)."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually create. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "callout_text"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1644)
+
+<a id="tool-google-ads-create-demand-gen-multi-asset-ad"></a>
+
+### `google_ads_create_demand_gen_multi_asset_ad`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a Demand Gen Multi-Asset ad under a DEMAND_GEN_MULTI_ASSET_AD_GROUP (will be PAUSED until approved). Supports both image-based and video-only ads. Validates character limits and count caps before the API call: headlines (max 5, ≤40 chars each), long_headlines (max 5, ≤90 chars), descriptions (max 5, ≤90 chars). For image ads: marketing_image_asset_ids (1.91:1 landscape, ≥1); for video ads: video_asset_ids (YouTube video asset IDs) — omit images entirely for a video-only ad, or combine both. Square/portrait/logo assets are optional. call_to_action is a string enum value such as 'LEARN_MORE' or 'SHOP_NOW'. Auto-labels the created ad.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Optional internal ad name (not user-facing) shown in the UI's Ad column — e.g. 'Gartner CIO AI - NAM Gov'. Set it to avoid the generic auto-name ('Ad 1'). NOTE: immutable after creation on DG multi-asset ads, so set it here."
+    },
+    "final_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "call_to_action": {
+      "type": "string",
+      "description": "CallToAction enum value, e.g. LEARN_MORE, SHOP_NOW, SIGN_UP, DOWNLOAD, BOOK_NOW, CONTACT_US, GET_QUOTE, APPLY_NOW, SUBSCRIBE, BUY_NOW, DONATE_NOW, ORDER_NOW, PLAY_NOW, SEE_MORE, START_NOW, VISIT_SITE, WATCH_NOW."
+    },
+    "marketing_image_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "1.91:1 landscape marketing image asset IDs (min 1 for image-based ads). Optional for video-only ads. Get IDs from google_ads_create_image_asset."
+    },
+    "square_marketing_image_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional 1:1 square marketing image asset IDs."
+    },
+    "portrait_marketing_image_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional 4:5 portrait marketing image asset IDs."
+    },
+    "logo_image_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional 1:1 logo image asset IDs."
+    },
+    "video_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "YouTube video asset IDs for video-only (or video+image) DG ads. Get IDs from existing youtube_video_asset assets (e.g. via a GAQL asset query) — there is currently no dedicated 'create YouTube video asset' tool; find-or-create happens implicitly the first time a video is used on a VIDEO campaign ad (see google_ads_update_video_ad_videos), after which its asset ID is reusable here."
+    },
+    "headlines": {
+      "type": "array",
+      "description": "Max 5 headlines, each ≤40 characters. Each item is a string or { text, pinned_position? }.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "pinned_position": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        ]
+      }
+    },
+    "long_headlines": {
+      "type": "array",
+      "description": "Max 5 long headlines, each ≤90 characters.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "descriptions": {
+      "type": "array",
+      "description": "Max 5 descriptions, each ≤90 characters.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional additional labels (auto-applied Claude-MM-DD-YY label is added regardless)."
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "final_urls",
+    "business_name",
+    "call_to_action",
+    "headlines",
+    "descriptions"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1059)
+
+<a id="tool-google-ads-create-image-asset"></a>
+
+### `google_ads_create_image_asset`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Upload an image asset for use in Demand Gen (or other image-capable) ads. Provide exactly one of file_path (absolute path to PNG/JPG/GIF on disk) or base64_data (raw base64, no data URL prefix). Validates mime type, max 5MB, min dimensions 600x314 (Demand Gen minimum). Auto-labels the created asset. Returns {asset_id, resource_name, name, bytes, mime_type}.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable asset name (shown in the Google Ads UI)."
+    },
+    "file_path": {
+      "type": "string",
+      "description": "Absolute path to the image on disk. Mutually exclusive with base64_data."
+    },
+    "base64_data": {
+      "type": "string",
+      "description": "Raw base64-encoded image data (no 'data:image/...;base64,' prefix). Mutually exclusive with file_path."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1247)
+
+<a id="tool-google-ads-create-lead-form-asset"></a>
+
+### `google_ads_create_lead_form_asset`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a LeadFormAsset (Google Demand Gen / Discovery / Search lead form). Validates required fields, enum membership, and Google's character limits before hitting the API. NEVER use unless the user explicitly asked for a lead form: requires explicit_lead_form_request=true. After creation, use google_ads_link_asset_to_campaign with field_type=LEAD_FORM (also requires explicit_lead_form_request=true) to attach it to a campaign. v1 supports standard fields only (FULL_NAME, EMAIL, WORK_EMAIL, PHONE_NUMBER, COMPANY_NAME, JOB_TITLE, etc.); custom questions, qualifying questions, and CRM delivery_methods (webhook) are NOT yet supported — leads must be downloaded from Google Ads UI as CSV until delivery_methods ships. Auto-labels the created asset. Returns {asset_id, resource_name, name}.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "explicit_lead_form_request": {
+      "type": "boolean",
+      "description": "Lead forms are NEVER created or attached unless the user explicitly asked for a lead form in this conversation. Set true only then; the call is refused otherwise. (Policy 2026-10-07: an unrequested lead form produced 555 junk submits that were never imported.)"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable asset name shown in the Google Ads UI."
+    },
+    "business_name": {
+      "type": "string",
+      "description": "Business name shown on the form (≤25 chars)."
+    },
+    "call_to_action": {
+      "type": "string",
+      "enum": [
+        "LEARN_MORE",
+        "GET_QUOTE",
+        "APPLY_NOW",
+        "SIGN_UP",
+        "CONTACT_US",
+        "SUBSCRIBE",
+        "DOWNLOAD",
+        "BOOK_NOW",
+        "GET_OFFER",
+        "REGISTER",
+        "GET_INFO",
+        "REQUEST_DEMO",
+        "JOIN_NOW",
+        "GET_STARTED"
+      ],
+      "description": "Primary CTA enum on the form (button label)."
+    },
+    "call_to_action_description": {
+      "type": "string",
+      "description": "Secondary CTA description text (≤30 chars). Shown alongside the CTA button."
+    },
+    "headline": {
+      "type": "string",
+      "description": "Form headline (≤30 chars)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Form description / value proposition (≤200 chars)."
+    },
+    "privacy_policy_url": {
+      "type": "string",
+      "description": "https:// URL to the privacy policy. Required by Google."
+    },
+    "privacy_policy_text": {
+      "type": "string",
+      "description": "Optional custom privacy policy disclosure text."
+    },
+    "final_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Required by Google. At least one https:// landing URL — e.g. the landing page for the offer. Distinct from privacy_policy_url. Without this the API returns REQUIRED_NONEMPTY_LIST on operations.create.final_urls."
+    },
+    "post_submit_headline": {
+      "type": "string",
+      "description": "Confirmation screen headline (≤25 chars)."
+    },
+    "post_submit_description": {
+      "type": "string",
+      "description": "Confirmation screen description (≤200 chars)."
+    },
+    "post_submit_call_to_action": {
+      "type": "string",
+      "enum": [
+        "VISIT_SITE",
+        "DOWNLOAD",
+        "LEARN_MORE",
+        "SHOP_NOW"
+      ],
+      "description": "Post-submit CTA enum."
+    },
+    "desired_intent": {
+      "type": "string",
+      "enum": [
+        "LOW_INTENT",
+        "HIGH_INTENT"
+      ],
+      "description": "Optional. LOW_INTENT (more leads, lower quality) vs HIGH_INTENT (review screen before submit; fewer/higher-quality leads). Defaults to Google's default if omitted."
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "FULL_NAME",
+          "EMAIL",
+          "PHONE_NUMBER",
+          "POSTAL_CODE",
+          "STREET_ADDRESS",
+          "CITY",
+          "REGION",
+          "COUNTRY",
+          "WORK_EMAIL",
+          "COMPANY_NAME",
+          "WORK_PHONE",
+          "JOB_TITLE"
+        ]
+      },
+      "description": "Standard fields collected from the user. Must include EMAIL or WORK_EMAIL."
+    },
+    "background_image_asset_id": {
+      "type": "string",
+      "description": "Optional. Numeric asset_id of a previously-uploaded image asset to use as the form background. Use google_ads_create_image_asset to create one first."
+    }
+  },
+  "required": [
+    "name",
+    "business_name",
+    "call_to_action",
+    "call_to_action_description",
+    "headline",
+    "description",
+    "privacy_policy_url",
+    "final_urls",
+    "post_submit_headline",
+    "post_submit_description",
+    "post_submit_call_to_action",
+    "fields"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1262)
+
+<a id="tool-google-ads-create-page-feed"></a>
+
+### `google_ads_create_page_feed`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create an AI Max / DSA page feed (AssetSet of type PAGE_FEED) and attach it to a campaign. Each URL becomes a PageFeedAsset tagged with the given label. Use this to constrain AI Max final-URL expansion to a specific list of landing pages. Returns the AssetSet resource name and the number of URLs added.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Numeric campaign ID to attach the page feed to."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name for the AssetSet (shown in Business Data)."
+    },
+    "urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of full landing page URLs to include."
+    },
+    "label": {
+      "type": "string",
+      "description": "Custom label applied to all feed items (default: 'page-feed')."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "name",
+    "urls"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1227)
+
+<a id="tool-google-ads-create-responsive-search-ad"></a>
+
+### `google_ads_create_responsive_search_ad`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a responsive search ad (will be PAUSED until approved). Validates before creating. Headlines/descriptions can be plain strings or objects with pinned_position (1-3 for headlines, 1-2 for descriptions). path1 and path2 are required (display URL paths). A `claude-YYYY-MM-DD` label is auto-applied; pass additional `labels` to attach more. By default requires ≥15 headlines and ≥4 descriptions (house floor, stricter than the API's own 3/2 minimums); pass allow_partial_assets: true to override.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string"
+    },
+    "final_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "headlines": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "pinned_position": {
+                "type": "number",
+                "description": "Pin to position 1, 2, or 3"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        ]
+      }
+    },
+    "descriptions": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "pinned_position": {
+                "type": "number",
+                "description": "Pin to position 1 or 2"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        ]
+      }
+    },
+    "path1": {
+      "type": "string",
+      "description": "Display URL path segment 1 (required, max 15 chars)."
+    },
+    "path2": {
+      "type": "string",
+      "description": "Display URL path segment 2 (required, max 15 chars)."
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional additional labels to attach alongside the auto-applied claude-YYYY-MM-DD label. The auto-label alone satisfies the ≥1 label requirement, so this is for extra tagging only."
+    },
+    "label_descriptor": {
+      "type": "string",
+      "description": "Optional short description of WHAT this change is, appended to the auto label as a kebab slug: claude-MM-DD-YY-<label_descriptor> (e.g. \"brand cpa fix\" -> claude-07-23-26-brand-cpa-fix). Makes the audit label self-explanatory for rollback. Slugged automatically; bounded to the 80-char label limit on a word boundary."
+    },
+    "allow_partial_assets": {
+      "type": "boolean",
+      "description": "House-floor escape hatch. Defaults to false, meaning ≥15 headlines and ≥4 descriptions are required. Pass true to create an ad with fewer (still subject to the API's own 3/2 minimums)."
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "final_urls",
+    "headlines",
+    "descriptions",
+    "path1",
+    "path2"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L181)
+
+<a id="tool-google-ads-create-sitelink"></a>
+
+### `google_ads_create_sitelink`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a new sitelink Asset (link_text + final_urls, optional two description lines). Sitelinks are shared across campaigns/ad groups -- use google_ads_replace_sitelink_url if the goal is to fix a broken URL on an existing sitelink (sitelink final_urls are immutable; the correct pattern is create new + re-link). DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "link_text": {
+      "type": "string",
+      "description": "Clickable sitelink label (max 25 chars)."
+    },
+    "final_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Destination URLs. Must start with http:// or https://."
+    },
+    "description1": {
+      "type": "string",
+      "description": "Optional description line 1 (max 35 chars). If set, description2 must also be set."
+    },
+    "description2": {
+      "type": "string",
+      "description": "Optional description line 2 (max 35 chars). If set, description1 must also be set."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually create. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "link_text",
+    "final_urls"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L963)
+
+<a id="tool-google-ads-create-structured-snippet"></a>
+
+### `google_ads_create_structured_snippet`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a new STRUCTURED_SNIPPET Asset (a header + 3-10 short values, e.g. header "Types" with values ["DLP", "DSPM"]). The header must be one of Google's fixed structured-snippet headers (Amenities, Brands, Courses, Degree programs, Destinations, Featured hotels, Insurance coverage, Models, Neighborhoods, Service catalog, Shows, Styles, Types) -- Google rejects any other header. Each value is max 25 chars. Structured snippets are shared and must be linked separately -- use google_ads_link_asset_to_campaign (campaign-level) or google_ads_link_asset_to_customer (account-level) after creation. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "header": {
+      "type": "string",
+      "enum": [
+        "Amenities",
+        "Brands",
+        "Courses",
+        "Degree programs",
+        "Destinations",
+        "Featured hotels",
+        "Insurance coverage",
+        "Models",
+        "Neighborhoods",
+        "Service catalog",
+        "Shows",
+        "Styles",
+        "Types"
+      ],
+      "description": "One of Google's fixed structured-snippet headers."
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "3-10 short values (max 25 chars each)."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually create. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "header",
+    "values"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1661)
+
+<a id="tool-google-ads-get-ad-strength"></a>
+
+### `google_ads_get_ad_strength`
+
+Get the ad strength rating (POOR, AVERAGE, GOOD, EXCELLENT) for RSAs in a campaign or ad group, along with headline/description counts. Ad strength below GOOD suppresses delivery. Use this to identify ads that need more creative assets.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric campaign IDs."
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs."
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L896)
+
+<a id="tool-google-ads-link-asset-to-campaign"></a>
+
+### `google_ads_link_asset_to_campaign`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Link an existing asset to one or more campaigns by field type. Supports SITELINK, CALLOUT, STRUCTURED_SNIPPET, and LEAD_FORM. Create the asset first (e.g. with google_ads_create_sitelink or google_ads_create_lead_form_asset), then use this to attach it to campaigns. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "explicit_lead_form_request": {
+      "type": "boolean",
+      "description": "Lead forms are NEVER created or attached unless the user explicitly asked for a lead form in this conversation. Set true only then; the call is refused otherwise. (Policy 2026-10-07: an unrequested lead form produced 555 junk submits that were never imported.)"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Numeric ID of the existing asset to link."
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of campaigns to link the asset to."
+    },
+    "field_type": {
+      "type": "string",
+      "enum": [
+        "SITELINK",
+        "CALLOUT",
+        "STRUCTURED_SNIPPET",
+        "LEAD_FORM"
+      ],
+      "description": "Asset field type — determines how the asset appears in ads."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "asset_id",
+    "campaign_ids",
+    "field_type"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1613)
+
+<a id="tool-google-ads-link-asset-to-customer"></a>
+
+### `google_ads_link_asset_to_customer`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Link an existing asset to the customer account itself (account-level, applies across every campaign unless overridden at a lower level). Supports SITELINK, CALLOUT, and STRUCTURED_SNIPPET. Create the asset first (e.g. with google_ads_create_sitelink, google_ads_create_callout, or google_ads_create_structured_snippet), then use this to attach it at the account level. To remove an account-level link, use google_ads_pause_asset_links against the resulting customer_asset resource name. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Numeric ID of the existing asset to link."
+    },
+    "field_type": {
+      "type": "string",
+      "enum": [
+        "SITELINK",
+        "CALLOUT",
+        "STRUCTURED_SNIPPET"
+      ],
+      "description": "Asset field type — determines how the asset appears in ads."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "asset_id",
+    "field_type"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1687)
+
+<a id="tool-google-ads-pause-asset-links"></a>
+
+### `google_ads_pause_asset_links`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Pause asset links (customer_asset, campaign_asset, or ad_group_asset). Use this to stop a sitelink from serving without deleting the underlying asset. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to get a preview. Resource name form: customers/{cid}/customerAssets/{assetId}~SITELINK, customers/{cid}/campaignAssets/{campId}~{assetId}~SITELINK, or customers/{cid}/adGroupAssets/{agId}~{assetId}~SITELINK.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "resource_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full resource names of the asset links to pause."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually pause. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "resource_names"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1012)
+
+<a id="tool-google-ads-replace-sitelink-url"></a>
+
+### `google_ads_replace_sitelink_url`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Fix a broken/outdated sitelink URL. Google Ads treats sitelink Asset.final_urls as immutable, so this creates a new sitelink asset with the corrected URL (preserving link_text + descriptions from the old one unless overridden), re-links every campaign / ad-group / customer-level attachment to the new asset, then removes the old links. The old Asset itself is NOT deleted. DRY-RUN BY DEFAULT.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "old_asset_id": {
+      "type": "string",
+      "description": "Numeric ID of the existing sitelink asset to replace."
+    },
+    "new_final_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "New destination URLs for the replacement sitelink. Must start with http:// or https://."
+    },
+    "new_link_text": {
+      "type": "string",
+      "description": "Optional override for the sitelink click text (default: preserve from old asset). Max 25 chars."
+    },
+    "new_description1": {
+      "type": "string",
+      "description": "Optional override for description line 1 (default: preserve from old asset). Max 35 chars."
+    },
+    "new_description2": {
+      "type": "string",
+      "description": "Optional override for description line 2 (default: preserve from old asset). Max 35 chars."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually replace. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "old_asset_id",
+    "new_final_urls"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L987)
+
+<a id="tool-google-ads-update-ad-asset-automation"></a>
+
+### `google_ads_update_ad_asset_automation`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Set asset_automation_settings (auto-generated video, image enhancements, etc.) on one or more AdGroupAds. Use this to opt Demand Gen multi-asset ads OUT of Google's auto-generation features so creative output stays under advertiser control. Likely Demand Gen UI mappings (verify in UI on first use): 'Auto-generate video' → GENERATE_VIDEOS_FROM_OTHER_ASSETS; 'Adaptive layouts' → GENERATE_DESIGN_VERSIONS_FOR_IMAGES. Auto-applies today's Claude-MM-DD-YY label.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric ad IDs OR full ad_group_ad resource names. Resource names are preferred when an ad ID exists in multiple ad groups."
+    },
+    "automation_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "TEXT_ASSET_AUTOMATION",
+          "GENERATE_VERTICAL_YOUTUBE_VIDEOS",
+          "GENERATE_SHORTER_YOUTUBE_VIDEOS",
+          "GENERATE_LANDING_PAGE_PREVIEW",
+          "GENERATE_ENHANCED_YOUTUBE_VIDEOS",
+          "GENERATE_IMAGE_ENHANCEMENT",
+          "GENERATE_IMAGE_EXTRACTION",
+          "GENERATE_DESIGN_VERSIONS_FOR_IMAGES",
+          "FINAL_URL_EXPANSION_TEXT_ASSET_AUTOMATION",
+          "GENERATE_VIDEOS_FROM_OTHER_ASSETS"
+        ]
+      },
+      "description": "AssetAutomationType enum names to set. For Demand Gen 'auto-generate video' + 'adaptive layouts' opt-out, default candidates are GENERATE_VIDEOS_FROM_OTHER_ASSETS and GENERATE_DESIGN_VERSIONS_FOR_IMAGES."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "OPTED_IN",
+        "OPTED_OUT"
+      ],
+      "description": "Default OPTED_OUT."
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional custom labels (added alongside auto-applied Claude-MM-DD-YY label)."
+    }
+  },
+  "required": [
+    "ad_ids",
+    "automation_types"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L834)
+
+<a id="tool-google-ads-update-ad-final-urls"></a>
+
+### `google_ads_update_ad_final_urls`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Update final_urls on specific RSAs by ID, IN PLACE via AdService: same ad ID, status and ad-level history kept; Google re-reviews the edited ad. Leaves other ads in the ad group untouched. Refuses non-RSA ads (video final_urls are API-immutable). If an ad is also linked in other ad groups, those links change too -- see other_links in the dry run. Dry-run by default — pass confirm=true to apply.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_id": {
+      "type": "string",
+      "description": "Numeric ad group ID. Required: each ad belongs to exactly one ad group, and the AdService resource name is ad_group_ad/{ad_group_id}~{ad_id}."
+    },
+    "ad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric ad IDs to update. All ads must live in the specified ad_group_id."
+    },
+    "new_final_url": {
+      "type": "string",
+      "description": "New final URL (must start with http:// or https://). Replaces existing final_urls with [new_final_url]."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "ad_group_id",
+    "ad_ids",
+    "new_final_url"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1497)
+
+<a id="tool-google-ads-update-asset-urls"></a>
+
+### `google_ads_update_asset_urls`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Update the final_urls on one or more assets (e.g. sitelinks, callouts). DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to get a preview. Updating an asset's URL affects EVERY campaign/ad group/customer link that uses that asset ID -- use GAQL against customer_asset/campaign_asset/ad_group_asset to check attachments first.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "updates": {
+      "type": "array",
+      "description": "List of assets to update.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "description": "Numeric asset ID"
+          },
+          "final_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "New final URLs. Must start with http:// or https://."
+          }
+        },
+        "required": [
+          "asset_id",
+          "final_urls"
+        ]
+      }
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to actually update. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "updates"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L930)
+
+<a id="tool-google-ads-update-campaign-ad-urls"></a>
+
+### `google_ads_update_campaign_ad_urls`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Bulk-replace the final URL on every enabled ad in a campaign. Used to point an experiment treatment campaign at a new landing page. Returns a dry-run preview unless execute=true.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Campaign whose ads will be updated."
+    },
+    "new_final_url": {
+      "type": "string",
+      "description": "The new final URL to set on all ads (e.g. 'https://www.forcepoint.com/form/dlp-free-trial')."
+    },
+    "execute": {
+      "type": "boolean",
+      "description": "Set true to apply changes. Omit or false for a dry-run preview of affected ads."
+    }
+  },
+  "required": [
+    "campaign_id",
+    "new_final_url"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1473)
+
+<a id="tool-google-ads-update-demand-gen-multi-asset-ad"></a>
+
+### `google_ads_update_demand_gen_multi_asset_ad`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Attempt to update copy on a Demand Gen ad. WARNING: on Demand Gen MULTI-ASSET ads the entire creative — headlines, descriptions, AND images — is IMMUTABLE after creation; the Google Ads API rejects any such update with IMMUTABLE_FIELD (verified live 2026-07-12). To change ANY creative on a multi-asset ad you must RECREATE it (create a new ad + pause the old one), not update it. This tool is retained for DG ad formats that may permit copy edits; against a multi-asset ad it will error. Provide the ad's resource name (customers/XXX/adGroupAds/YYY~ZZZ) or numeric ad ID.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_resource_name": {
+      "type": "string",
+      "description": "Full resource name (e.g. customers/7158566222/adGroupAds/200360442360~814405338431) or numeric ad ID (814405338431). If numeric ID, the tool resolves it to the full name."
+    },
+    "headlines": {
+      "type": "array",
+      "description": "Optional: max 5 headlines, each ≤40 characters. Omit to keep current value.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "pinned_position": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        ]
+      }
+    },
+    "long_headlines": {
+      "type": "array",
+      "description": "Optional: max 5 long headlines, each ≤90 characters. Omit to keep current value.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "descriptions": {
+      "type": "array",
+      "description": "Optional: max 5 descriptions, each ≤90 characters. Omit to keep current value.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional additional labels (auto-applied Claude-MM-DD-YY label is added regardless)."
+    }
+  },
+  "required": [
+    "customer_id",
+    "ad_resource_name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1146)
+
+<a id="tool-google-ads-update-responsive-search-ad-text"></a>
+
+### `google_ads_update_responsive_search_ad_text`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Update an RSA's headline/description text IN PLACE via AdService — same ad ID, no new ad created, no pause/clone. Use this instead of google_ads_create_responsive_search_ad + google_ads_pause_items for a text-only edit. WARNING: an Ad resource can be linked into more than one ad group (e.g. a base campaign and an experiment-page campaign sharing unedited ads); this tool edits the shared Ad resource, so one call changes EVERY linked ad_group_ad — check `affected_ad_group_ad_links` / `shared_across_multiple_ad_groups` in the dry-run before confirming. Pass only headlines and/or descriptions you want changed; omitted fields are left untouched. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview old→new text and the affected links.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_id": {
+      "type": "string",
+      "description": "Numeric ad ID of the RESPONSIVE_SEARCH_AD to edit."
+    },
+    "headlines": {
+      "type": "array",
+      "description": "Optional: the FULL replacement headline list (3-15 items, ≤30 chars each). Omit to leave headlines untouched.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "pinned_position": {
+                "type": "number",
+                "description": "Pin to position 1, 2, or 3"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        ]
+      }
+    },
+    "descriptions": {
+      "type": "array",
+      "description": "Optional: the FULL replacement description list (2-4 items, ≤90 chars each). Omit to leave descriptions untouched.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "pinned_position": {
+                "type": "number",
+                "description": "Pin to position 1 or 2"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        ]
+      }
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "ad_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1526)
+
+<a id="tool-google-ads-update-video-ad-videos"></a>
+
+### `google_ads_update_video_ad_videos`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Add or replace the YouTube videos on an existing video responsive ad (VIDEO campaigns, e.g. YouTube reach). The VIDEO channel is campaign-level API-locked, but AD-level video_responsive_ad.videos updates ARE allowed and edit the ad in place (same ad ID) — verified live 2026-07-18. Accepts YouTube URLs (watch/shorts/youtu.be/embed) or 11-char video IDs; finds-or-creates the YouTube video assets; preflights each new video via oEmbed (private videos are rejected by Google Ads — must be Public or Unlisted). Default mode 'append' keeps existing videos and adds new ones. Auto-labels the ad claude-MM-DD-YY.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_id": {
+      "type": "string",
+      "description": "Numeric ad ID (e.g. 815638860130) or full ads resource name (customers/XXX/ads/YYY). Must be a VIDEO_RESPONSIVE_AD."
+    },
+    "videos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "YouTube video URLs or 11-char video IDs to add (or, with mode=replace, the complete target list)."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "append",
+        "replace"
+      ],
+      "description": "append (default): keep current videos, add new ones. replace: the ad ends up with exactly the given list."
+    },
+    "skip_visibility_check": {
+      "type": "boolean",
+      "description": "Skip the oEmbed public/unlisted preflight (e.g. offline testing). Default false."
+    }
+  },
+  "required": [
+    "customer_id",
+    "ad_id",
+    "videos"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1197)
+
+## Audiences and audience insights
+
+<a id="tool-google-ads-attach-user-list-audience"></a>
+
+### `google_ads_attach_user_list_audience`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Attach a Customer Match / user-list audience to one or more ad groups. Defaults to OBSERVATION mode (reporting-only, does not restrict delivery) — pass mode='TARGETING' to restrict delivery to list members. Use for measuring on-list reach/CPM/conversions of existing campaigns without changing targeting. Get user_list_id from a GAQL query on user_list. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric IDs of ad groups to attach the user list to."
+    },
+    "user_list_id": {
+      "type": "string",
+      "description": "Numeric ID of the user_list (Customer Match list, similar audience, etc)."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "OBSERVATION",
+        "TARGETING"
+      ],
+      "description": "OBSERVATION (default) reports on list members without restricting delivery. TARGETING restricts the ad group to list members only."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "ad_group_ids",
+    "user_list_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1709)
+
+<a id="tool-google-ads-create-and-attach-audience-bundle"></a>
+
+### `google_ads_create_and_attach_audience_bundle`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create an Audience resource that bundles one or more user_lists (Customer Match lists, lookalikes, etc.) and attach it to ad groups. OR pass `existing_audience_id` to skip creation and attach an existing Audience to additional ad groups (useful for replicating one bundle across many campaigns/theaters). Required for Demand Gen ad groups whose use_audience_grouped flag is set (where direct user_list criterion attachment is rejected with CANNOT_ADD_AUDIENCE_SEGMENT_CRITERION_WHEN_AUDIENCE_GROUPED_IS_SET). Also handles Lookalike audiences which can never be attached as direct user_list criteria. Note: each ad group can only have one Audience criterion (ONE_AUDIENCE_ALLOWED_PER_AD_GROUP) — the call will fail for ad groups that already have one. The bundled audience is attached as a signal — for Demand Gen this informs optimization without restricting delivery (observation-equivalent) and surfaces in ad_group_audience_view reports. DRY-RUN BY DEFAULT: omit `confirm` or pass `confirm: false` to preview.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name for the new Audience resource (required when creating; ignored when existing_audience_id is set)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional human-readable description of the audience."
+    },
+    "user_list_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric IDs of user_lists to bundle into the audience. Required when creating; ignored when existing_audience_id is set."
+    },
+    "existing_audience_id": {
+      "type": "string",
+      "description": "Optional: numeric ID of an existing Audience resource to attach instead of creating a new one. When set, name and user_list_ids are ignored."
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Numeric IDs of ad groups to attach the bundled audience to."
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true to apply. Omit or false for dry-run preview."
+    }
+  },
+  "required": [
+    "ad_group_ids"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1736)
+
+## Conversions and measurement
+
+<a id="tool-google-ads-ad-performance-by-conversion"></a>
+
+### `google_ads_ad_performance_by_conversion`
+
+Get ad performance broken down by conversion action. Shows which ads drive which conversion types. Includes paused and removed ads that had activity in the date range (status column labels them) — historical metrics are never filtered by current status.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric string campaign IDs"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L703)
+
+<a id="tool-google-ads-get-campaign-tracking"></a>
+
+### `google_ads_get_campaign_tracking`
+
+Get campaign tracking parameters including tracking URL template, final URL suffix, and custom URL parameters
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to get tracking info for"
+    }
+  },
+  "required": [
+    "campaign_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L46)
+
+<a id="tool-google-ads-keyword-performance-by-conversion"></a>
+
+### `google_ads_keyword_performance_by_conversion`
+
+Get keyword performance broken down by conversion action. Shows which keywords drive which conversion types (e.g., form fills, MQLs, etc.). Includes paused and removed keywords that had activity in the date range (status column labels them) — historical metrics are never filtered by current status.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "keyword_text_contains": {
+      "type": "string",
+      "description": "Filter keywords containing this text"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric string campaign IDs"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L634)
+
+<a id="tool-google-ads-list-conversion-actions"></a>
+
+### `google_ads_list_conversion_actions`
+
+List all available conversion actions (e.g., form fills, MQLs, etc.) to understand what conversion tracking is set up.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L719)
+
+<a id="tool-google-ads-search-term-report-by-conversion"></a>
+
+### `google_ads_search_term_report_by_conversion`
+
+Get search term report broken down by conversion action. Shows which search queries drive which conversion types.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Start date in YYYY-MM-DD format"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "End date in YYYY-MM-DD format"
+    },
+    "keyword_text_contains": {
+      "type": "string",
+      "description": "Filter by keyword text"
+    },
+    "search_term_contains": {
+      "type": "string",
+      "description": "Filter search terms containing this text"
+    },
+    "campaign_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by numeric string campaign IDs"
+    },
+    "ad_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Filter by ad group IDs"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L669)
+
+<a id="tool-google-ads-update-campaign-tracking"></a>
+
+### `google_ads_update_campaign_tracking`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Update campaign tracking parameters: final URL suffix, tracking URL template, and/or custom URL parameters. Use google_ads_get_campaign_tracking first to see current values.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The numeric string campaign ID to update"
+    },
+    "final_url_suffix": {
+      "type": "string",
+      "description": "New final URL suffix (appended to landing page URLs). Set to empty string to clear."
+    },
+    "tracking_url_template": {
+      "type": "string",
+      "description": "New tracking URL template. Set to empty string to clear."
+    },
+    "url_custom_parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Parameter name (without {_ } wrapper)"
+          },
+          "value": {
+            "type": "string",
+            "description": "Parameter value (can include ValueTrack macros)"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "description": "Custom URL parameters (replaces all existing custom params)"
+    }
+  },
+  "required": [
+    "campaign_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L587)
+
+## Experiments and recommendations
+
+<a id="tool-google-ads-create-experiment"></a>
+
+### `google_ads_create_experiment`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Create a SEARCH_CUSTOM experiment (A/B test) on an existing campaign. Google automatically creates a treatment campaign as a copy of the base. Returns experiment_id and treatment_campaign_id so you can modify the treatment arm (e.g. change final URLs, add RSAs) before scheduling. Use google_ads_schedule_experiment to go live.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "base_campaign_id": {
+      "type": "string",
+      "description": "Numeric ID of the base (control) campaign."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable experiment name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description."
+    },
+    "suffix": {
+      "type": "string",
+      "description": "Suffix appended to the auto-created treatment campaign name. Defaults to ' [EXP]'."
+    },
+    "traffic_split_percent": {
+      "type": "number",
+      "description": "Percent of traffic sent to the treatment arm (1–99). Defaults to 50."
+    },
+    "start_date": {
+      "type": "string",
+      "description": "YYYY-MM-DD start date. Defaults to today."
+    },
+    "end_date": {
+      "type": "string",
+      "description": "YYYY-MM-DD end date."
+    }
+  },
+  "required": [
+    "base_campaign_id",
+    "name"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1338)
+
+<a id="tool-google-ads-end-experiment"></a>
+
+### `google_ads_end_experiment`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Halt a running experiment. Traffic returns entirely to the base (control) campaign. Moves status to HALTED.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "experiment_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1427)
+
+<a id="tool-google-ads-get-experiment"></a>
+
+### `google_ads_get_experiment`
+
+Get full details for an experiment including its arms and treatment campaign ID.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string",
+      "description": "Numeric experiment ID (from google_ads_create_experiment or google_ads_list_experiments)."
+    }
+  },
+  "required": [
+    "experiment_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1398)
+
+<a id="tool-google-ads-list-experiments"></a>
+
+### `google_ads_list_experiments`
+
+List all experiments in the account, optionally filtered by base campaign ID.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Optional: filter to experiments on this base campaign."
+    },
+    "status_filter": {
+      "type": "string",
+      "enum": [
+        "ALL",
+        "SETUP",
+        "ENABLED",
+        "HALTED",
+        "PROMOTED",
+        "GRADUATED"
+      ],
+      "description": "Filter by status. Defaults to ALL (excluding REMOVED)."
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1378)
+
+<a id="tool-google-ads-promote-experiment"></a>
+
+### `google_ads_promote_experiment`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+**Behavior:** This handler supports API validate_only; that does not establish the same behavior for the other write tools.
+
+Graduate the treatment arm to become the permanent campaign (replaces base). Use when the treatment wins. Moves status to PROMOTED.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "validate_only": {
+      "type": "boolean",
+      "description": "Dry-run: validate without actually promoting. Defaults to false."
+    }
+  },
+  "required": [
+    "experiment_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1440)
+
+<a id="tool-google-ads-remove-experiment"></a>
+
+### `google_ads_remove_experiment`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Permanently remove an experiment that is in SETUP status. Use to clean up orphaned or misconfigured experiments before recreating them. Only works on SETUP experiments (not yet scheduled/running).
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string",
+      "description": "Numeric experiment ID to remove."
+    }
+  },
+  "required": [
+    "experiment_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1457)
+
+<a id="tool-google-ads-schedule-experiment"></a>
+
+### `google_ads_schedule_experiment`
+
+Requires `GOOGLE_ADS_MCP_WRITE=true` to be listed and called.
+
+Start a SETUP experiment so it begins serving traffic. Moves status from SETUP → ENABLED.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "experiment_id"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L1414)
+
+## Previews, validation, and local helpers
+
+<a id="tool-google-ads-list-pending-changes"></a>
+
+### `google_ads_list_pending_changes`
+
+List all pending changes (paused items with claude- label) awaiting review
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    }
+  }
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L59)
+
+<a id="tool-google-ads-validate-ad"></a>
+
+### `google_ads_validate_ad`
+
+**Behavior:** Checks RSA assets locally; this is not an API validate_only mutation. The implementation still initializes the credential-dependent manager before this validator.
+
+Validate an RSA without creating it. Use this to check for errors before creating. Enforces: 3-15 headlines (≤30 chars), 2-4 descriptions (≤90 chars), ≥1 final URL, both path1 AND path2 present (≤15 chars each), ≥1 label. Also enforces a house floor of ≥15 headlines and ≥4 descriptions by default (mirroring google_ads_create_responsive_search_ad's pre-check) -- pass allow_partial_assets: true to preview a below-floor ad without that rejection.
+
+<details>
+<summary>Parameters — full input schema</summary>
+
+```json
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "headlines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "3-15 headlines, max 30 chars each"
+    },
+    "descriptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "2-4 descriptions, max 90 chars each"
+    },
+    "final_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "path1": {
+      "type": "string",
+      "description": "Display URL path segment 1 (required, max 15 chars). Shown in ad preview."
+    },
+    "path2": {
+      "type": "string",
+      "description": "Display URL path segment 2 (required, max 15 chars). Shown in ad preview."
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "At least 1 label required (e.g. 'claude-2026-04-12' for versioning). Enables later discovery and auditing."
+    },
+    "allow_partial_assets": {
+      "type": "boolean",
+      "description": "House-floor escape hatch. Defaults to false, meaning ≥15 headlines and ≥4 descriptions are required. Pass true to preview an ad with fewer (still subject to the API's own 3/2 minimums)."
+    }
+  },
+  "required": [
+    "headlines",
+    "descriptions",
+    "final_urls",
+    "path1",
+    "path2",
+    "labels"
+  ]
+}
+```
+
+</details>
+
+[Source](https://github.com/mharnett/mcp-google-ads/blob/9773a7f77de460b87e5b9ace47334616dae22bfa/src/tools.ts#L70)
+
+## Attribution
+
+Tool descriptions and schemas are extracted from the pinned upstream source under its [license](../licenses/mharnett-MIT.txt). See [upstream notices](../licenses/NOTICE.txt). Catalog navigation and behavior notes were added here.

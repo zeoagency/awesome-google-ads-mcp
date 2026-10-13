@@ -23,19 +23,16 @@ Use repository documentation and source files to support claims. Include the evi
 
 ## Submit a change
 
-1. Add or update the appropriate table in `README.md`:
-
-   ```markdown
-   | <a id="owner-repo"></a>[**owner/repo**](https://github.com/owner/repo) | Executes documented Google Ads operations through its verified interface. |
-   ```
-
-2. Update the comparison matrix for MCP servers, section counts, and navigation links as applicable.
-3. Check the repository links and the internal anchors.
-4. Run the checks used before committing:
+1. For an MCP, add or refresh its page in `docs/mcp/` using actual offline `tools/list` output and a pinned source commit. Include every registered tool: exact exported name, complete description, full recursive input JSON Schema, and a source permalink. Capture optional configurations as well as the default tool list; explain prefixes, visibility, and invocation gates.
+2. Compare the returned names with source registration and inspect each handler. Separate API reads, local calculations, staged previews, API validation, and real writes. Put other-platform tools and generic protocol fixtures in separate provider-page sections, with their platform or test purpose clearly labeled. Use only Google Ads and its shared helpers for the main task groups.
+3. Add every provider/tool pair to `docs/TOOLS.md`, sorted by exact tool name. Update README task groups from implemented capabilities, linking to representative tools. A provider can appear in several groups; do not rank by tool count. Keep full catalog counts distinct from default-client counts and retain upstream licenses.
+4. For a CLI or SDK, update its existing two-column README table and category counts. Check repository links, local page links, and anchors.
+5. Run the checks used before committing:
 
    ```bash
+   node .github/check-catalog.mjs
    npx --yes markdownlint-cli2@latest "**/*.md"
    git diff --check
    ```
 
-5. Open a pull request explaining the change and linking to the evidence.
+6. Open a pull request explaining the change, linking to evidence, and stating the extraction method and configurations checked.
